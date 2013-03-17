@@ -1,0 +1,8 @@
+This repo contains a simple application I'm writing to teach myself Spring MVC and Spring Web Flow.  I'm also learning to use JPA in CloudFoundry.  The application is for demonstration purposes only.
+
+I've included the project metadata (all of the .* directories and files) from the Spring Tool Suite, 
+but if you want to run in a different tool you can ignore those. 
+
+I've also attached a software license in case anyone finds something they want to reuse.  The license 
+is there for the warranty/liability clause more than anything else; I'm not particularly concerned 
+about someone stealing the intellectual property.
