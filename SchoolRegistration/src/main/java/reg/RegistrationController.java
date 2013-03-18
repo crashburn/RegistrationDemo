@@ -64,10 +64,18 @@ public class RegistrationController {
    public ModelAndView createSchool(HttpServletRequest request) {
       // Handle a new guest (if any):
       String name = request.getParameter("name");
+      String street = request.getParameter("street");
       String city = request.getParameter("city");
       String state = request.getParameter("state");
+      String zip = request.getParameter("zip");
+      String minGL = request.getParameter("minGradeLevel");
+      String maxGL = request.getParameter("maxGradeLevel");
       if (name != null) {
-    	  schoolDao.persist(new School(name, city, state));
+    	  GradeLevel minGradeLevel = GradeLevel.valueOf(minGL);
+    	  GradeLevel maxGradeLevel = GradeLevel.valueOf(maxGL);
+    	  Address address = new Address(street, city, state, zip);
+    	  School newSchool = new School(name, minGradeLevel, maxGradeLevel, address);
+    	  schoolDao.persist(newSchool);
       }
       return new ModelAndView("schools.jsp", "schoolDao", schoolDao);
    }

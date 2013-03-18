@@ -16,9 +16,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 </head>
 <body>
 	<form method="POST" action="newschool.html">
-		Name: <input type="text" name="name" /> 
+		Name: <input type="text" name="name" /> <br/>
+		Street: <input type="text" name="street" />
 		City: <input type="text" name="city" /> 
 		State: <input type="text" name="state" /> 
+		Zip: <input type="text" name="zip" /> <br/> 
+		Min Grade Level: <select name="minGradeLevel">
+			<% for(GradeLevel gl : GradeLevel.values()) { %>
+			<option value="<%=gl.name() %>"><%=gl.getDisplayValue() %></option>
+			<% } %>
+		</select>
+		Max Grade Level: <select name="maxGradeLevel">
+			<% for(GradeLevel gl : GradeLevel.values()) { %>
+			<option value="<%=gl.name() %>"><%=gl.getDisplayValue() %></option>
+			<% } %>
+		</select>
 		<input type="submit" value="Add" />
 	</form>
 <hr>

@@ -8,13 +8,10 @@
  */
 package reg;
 
-import java.util.List;
-
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class School {
@@ -26,20 +23,21 @@ public class School {
 	Long id;
 
 	private String name;
-	private String city;
-	private String state;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "school")
-	private List<Student> students;
+	private GradeLevel minGradeLevel;
+	private GradeLevel maxGradeLevel;
+
+	@Embedded
+	private Address address;
 
 	// Constructors:
 	public School() {
 	}
 
-	public School(String name, String city, String state) {
+	public School(String name, GradeLevel aMinGradeLevel, GradeLevel aMaxGradeLevel, Address anAddress) {
 		this.name = name;
-	    this.city = city;
-	    this.state = state;
+		this.minGradeLevel = aMinGradeLevel;
+		this.maxGradeLevel = aMaxGradeLevel;
+		this.address = anAddress;
 	}
 	
 	public long getId() {
@@ -54,34 +52,63 @@ public class School {
 		this.name = name;
 	}
 
+	public GradeLevel getMinGradeLevel() {
+		return minGradeLevel;
+	}
+	
+	public void setMinGradeLevel(GradeLevel aGradeLevel) {
+		minGradeLevel = aGradeLevel;
+	}
+
+	public GradeLevel getMaxGradeLevel() {
+		return maxGradeLevel;
+	}
+	
+	public void setMaxGradeLevel(GradeLevel aGradeLevel) {
+		maxGradeLevel = aGradeLevel;
+	}
+	
+	public String getStreet() {
+		return address.getStreet();
+	}
+
+	public void setStreet(String street) {
+		address.setStreet(street);
+	}
+
 	public String getCity() {
-		return city;
+		return address.getCity();
 	}
 
 	public void setCity(String city) {
-		this.city = city;
+		address.setCity(city);
 	}
 
 	public String getState() {
-		return state;
+		return address.getState();
 	}
 
 	public void setState(String state) {
-		this.state = state;
+		address.setState(state);
 	}
 
-	public List<Student> getStudents() {
-		return students;
+	public String getZip() {
+		return address.getState();
 	}
 
-	public void setStudents(List<Student> students) {
-		this.students = students;
+	public void setZip(String zip) {
+		address.setZip(zip);
 	}
 
 	// String Representation:
 	@Override
 	public String toString() {
-		return "name: " + name + ", city: " + city + ", state: " + state;
+		return  "name: " + getName() + 
+				", city: " + getCity() + 
+				", state: " + getState() + 
+				", min: " + minGradeLevel + 
+				", max: " + maxGradeLevel +
+				", isInRange(L7): " + GradeLevel.L7.isInRange(minGradeLevel, maxGradeLevel);
 	}
 
 }
