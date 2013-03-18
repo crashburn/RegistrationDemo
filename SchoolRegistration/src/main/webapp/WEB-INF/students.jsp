@@ -17,7 +17,28 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <body>
 	<form method="POST" action="newstudent.html">
 		First Name: <input type="text" name="firstName" /> 
-		Last Name: <input type="text" name="lastName" /> 
+		Last Name: <input type="text" name="lastName" /> <br/>
+		Sex: <select name="sex"> 
+			<% for(Sex s : Sex.values()) { %>
+			<option value="<%=s.name() %>"><%=s %></option>
+			<% } %>
+		</select>
+		Grade Level: <select name="gradeLevel"> 
+			<% for(GradeLevel gl : GradeLevel.values()) { %>
+			<option value="<%=gl.name() %>"><%=gl.getDisplayValue() %></option>
+			<% } %>
+		</select> 
+		Birth Date: (MM)<input type="text" name="birthMonth" /> 
+		(DD)<input type="text" name="birthDay" /> 
+		(YYYY)<input type="text" name="birthYear" /> <br/> 
+		Street: <input type="text" name="street" />
+		City: <input type="text" name="city" /> 
+		State: <input type="text" name="state" /> 
+		Zip: <input type="text" name="zip" /> <br/> 
+		Phone Number: <input type="text" name="areaCode" /> 
+		<input type="text" name="exchange" /> 
+		<input type="text" name="subscriberNumber" /> <br/> 
+		
 		<input type="submit" value="Add" />
 	</form>
 <hr>

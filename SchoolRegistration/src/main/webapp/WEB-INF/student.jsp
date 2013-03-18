@@ -20,7 +20,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <br/>
 <% if(student != null) { %>
 	First Name: <%=student.getFirstName()%><br/>
-	Last Name: <%=student.getFirstName()%><br/>
+	Last Name: <%=student.getLastName()%><br/>
+	Sex: <%=student.getSex()%><br/>
+	Birth Date: <%=student.getFormattedBirthdate("MM/dd/yyyy")%><br/>
+
+	Street: <%=student.getAddress().getStreet()%><br/>
+	City: <%=student.getAddress().getCity()%><br/>
+	State: <%=student.getAddress().getState()%><br/>
+	Zip: <%=student.getAddress().getZip()%><br/>
+
+	Phone Number: (<%=student.getPhoneNumber().getAreaCode()%>) 
+				<%=student.getPhoneNumber().getExchange()%>-<%=student.getPhoneNumber().getSubscriberNumber()%><br/>
+
+	Grade Level: <%=student.getGradeLevel().getDisplayValue()%><br/>
+
 	<% School school = student.getSchool(); %>
    	School: <%=((school!=null) ? school.getName() : "Not registered") %>
 	<form method="POST" action="register.html">

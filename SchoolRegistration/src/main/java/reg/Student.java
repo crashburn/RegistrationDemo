@@ -8,6 +8,10 @@
  */
 package reg;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,6 +30,15 @@ public class Student {
 
 	private String firstName;
 	private String lastName;
+	private Sex sex;
+	private Calendar birthdate;
+	private GradeLevel gradeLevel;
+	
+	@Embedded
+	private Address address;
+
+	@Embedded
+	private PhoneNumber phoneNumber;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "schoolId")
@@ -59,6 +72,51 @@ public class Student {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	
+	public Sex getSex() {
+		return sex;
+	}
+
+	public void setSex(Sex sex) {
+		this.sex = sex;
+	}
+
+	public Calendar getBirthdate() {
+		return birthdate;
+	}
+
+	public String getFormattedBirthdate(String pattern) {
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		return sdf.format(birthdate.getTime());
+	}
+
+	public void setBirthdate(Calendar birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public GradeLevel getGradeLevel() {
+		return gradeLevel;
+	}
+
+	public void setGradeLevel(GradeLevel gradeLevel) {
+		this.gradeLevel = gradeLevel;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public PhoneNumber getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(PhoneNumber phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
 	public School getSchool() {
 		return school;
@@ -71,7 +129,11 @@ public class Student {
 	// String Representation:
 	@Override
 	public String toString() {
-		return "first name: " + firstName + ", last name: " + lastName;
+		return  "first name: " + firstName + 
+				", last name: " + lastName +
+				", birthdate: " + birthdate +
+				", sex: " + sex +
+				", grade level: " + gradeLevel;
 	}
 
 }
