@@ -18,8 +18,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Student.bySchool_lastName",
+                query="SELECT s FROM Student s WHERE s.school = :school ORDER BY s.lastName"),
+    @NamedQuery(name="Student.bySchool_firstName",
+                query="SELECT s FROM Student s WHERE s.school = :school ORDER BY s.firstName"),
+    @NamedQuery(name="Student.bySchool_sex",
+                query="SELECT s FROM Student s WHERE s.school = :school ORDER BY s.sex"),
+    @NamedQuery(name="Student.bySchool_age",
+                query="SELECT s FROM Student s WHERE s.school = :school ORDER BY s.birthdate"),
+    @NamedQuery(name="Student.bySchool_gradeLevel",
+                query="SELECT s FROM Student s WHERE s.school = :school ORDER BY s.gradeLevel"),
+}) 
 public class Student {
 	private static final long serialVersionUID = 1L;
 	   
@@ -124,6 +138,25 @@ public class Student {
 
 	public void setSchool(School school) {
 		this.school = school;
+	}
+	
+	public int getAge() {
+		Calendar now = Calendar.getInstance();
+		// First get the raw diffs
+		int yearDiff  = now.get(Calendar.YEAR) - birthdate.get(Calendar.YEAR);
+		int monthDiff = now.get(Calendar.MONTH) - birthdate.get(Calendar.MONTH);
+		int dayDiff   = now.get(Calendar.DAY_OF_MONTH) - birthdate.get(Calendar.DAY_OF_MONTH);
+		// Default the age to the year difference
+		int age		  = yearDiff;
+		// If the birth month hasn't been reached yet, reduce the age by 1 
+		if(monthDiff  < 0) {
+			age--;
+		}
+		// If the birth month is the current month, check if the day has been reached
+		else if ( (monthDiff == 0) && (dayDiff < 0) ) {
+			age--;
+		}
+		return age;
 	}
 
 	// String Representation:

@@ -38,7 +38,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <%
    for (School school : schoolDao.getAllSchools()) {
 %>
-<li><%=school.getName()%> <a href="viewschool.html?id=<%=school.getId()%>">View</a> <a href="deleteschool.html?id=<%=school.getId()%>">delete</a></li>
+<li><%=school.getName()%> <a href="viewschool/<%=school.getId()%>/detail.html">View</a> <a href="deleteschool.html?id=<%=school.getId()%>">delete</a></li>
 <%
    }
 %>

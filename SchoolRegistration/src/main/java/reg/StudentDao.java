@@ -31,7 +31,7 @@ public class StudentDao {
 	   @PersistenceContext
 	   private EntityManager em;
 
-	   // Stores a new guest:
+	   // Stores a new student:
 	   @Transactional
 	   public void persist(Student student) {
 	      em.persist(student);
@@ -41,11 +41,25 @@ public class StudentDao {
 		   return em.find(Student.class, id);
 	   }
 
-	   // Retrieves all the guests:
+	   // Retrieves all the students:
 	   public List<Student> getAllStudents() {
 		   TypedQuery<Student> query =
 	            em.createQuery("SELECT s FROM Student s ORDER BY s.id", Student.class);
 		   return query.getResultList();
+	   }
+
+	   // Retrieves a page of students:
+	   public List<Student> getStudentsBySchool(School school, int aPageIndex, int aPageSize, String aSortBy) {
+		   String sortBy = (aSortBy != null) ? aSortBy : "lastName";
+		   TypedQuery<Student> query =
+	       //     em.createQuery("SELECT s FROM Student s WHERE s.school = :school ORDER BY s.lastName", Student.class);
+		   		em.createNamedQuery("Student.bySchool_" + sortBy, Student.class);
+		   query.setParameter("school", school);
+		   List<Student> results =
+				      query.setFirstResult(aPageIndex * aPageSize)
+				           .setMaxResults(aPageSize)
+				           .getResultList();
+		   return results;
 	   }
 	   
 	   @Transactional

@@ -9,18 +9,22 @@
 package reg;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class RegistrationController {
+	
+	private static final int PAGE_SIZE = 5;
 	
    @Autowired
    private SchoolDao schoolDao;
@@ -35,15 +39,26 @@ public class RegistrationController {
       return new ModelAndView("schools.jsp", "schoolDao", schoolDao);
    }
 
-   @RequestMapping(value = "/viewschool")
-   public ModelAndView viewSchool(HttpServletRequest request) {
-	   String in = request.getParameter("id");
+   @RequestMapping(value = "/viewschool/{schoolId}/detail")
+   public ModelAndView viewSchool(HttpServletRequest request, @PathVariable String schoolId) {
+	   //String schoolId = request.getParameter("id");
+	   String pageIn = request.getParameter("pageIndex");
+	   String pageSort = request.getParameter("sortBy");
 	   try {
-		   long id = Long.parseLong(in);
-		   return new ModelAndView("school.jsp", "school", schoolDao.retrieve(id));
+		   // Populate the school
+		   long id = Long.parseLong(schoolId);
+		   School school = schoolDao.retrieve(id);
+		   ModelAndView mav = new ModelAndView("school.jsp", "school", school);
+		   
+		   // Populate the students
+		   int pageIndex = (pageIn != null) ? Integer.parseInt(pageIn) : 0; 
+		   List<Student> students = studentDao.getStudentsBySchool(school, pageIndex, PAGE_SIZE, pageSort);
+		   mav.addObject("students", students);
+		   
+		   return mav;
 	   }
 	   catch(NumberFormatException nfe) {
-		   logger.severe("could not interpret school id: " + in);
+		   logger.severe("could not interpret school id: " + schoolId);
 		   return new ModelAndView("schools.jsp", "schoolDao", schoolDao);
 	   }
    }
