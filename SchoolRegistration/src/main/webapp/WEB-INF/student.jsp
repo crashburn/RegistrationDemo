@@ -9,8 +9,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <%@page import="reg.*"%>
 <jsp:useBean id="student" type="reg.Student" scope="request" />
 <jsp:useBean id="schoolDao" type="reg.SchoolDao" scope="request" />
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <title>Student Details</title>
@@ -41,7 +40,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 		<%
    		for (School choice : schoolDao.getAllSchools()) {
 		%>
-			<input type="radio" name="choiceId" value="<%=choice.getId()%>"><%=choice.getName()%></input>
+			<input type="radio" name="choiceId" value="<%=choice.getId()%>" /><%=choice.getName()%>
 		<%
    		}
 		%>

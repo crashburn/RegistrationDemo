@@ -9,8 +9,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <%@page import="reg.*"%>
 <jsp:useBean id="school" type="reg.School" scope="request" />
 <jsp:useBean id="students" type="java.util.List<Student>" scope="request" />
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <title>School Details</title>
@@ -40,7 +39,6 @@ Students:<br/>
 <% } %>
 </table>
 <script>
-	//Function to change the content of t2
 	function tableSort(sortBy) {
 		window.location.search = 'sortBy=' + sortBy;
 	}
