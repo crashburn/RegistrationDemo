@@ -7,7 +7,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="reg.*"%>
-<jsp:useBean id="schoolDao" type="reg.SchoolDao" scope="request" />
+<jsp:useBean id="schools" type="java.util.List<School>" scope="request" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,15 +33,41 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 		<input type="submit" value="Add" />
 	</form>
 <hr>
-<ol>
-<%
-   for (School school : schoolDao.getAllSchools()) {
-%>
-<li><%=school.getName()%> <a href="viewschool/<%=school.getId()%>/detail.html">View</a> <a href="deleteschool.html?id=<%=school.getId()%>">delete</a></li>
-<%
-   }
-%>
-</ol>
+Schools:<br/>
+<table>
+<tr id="headerRow">
+<th id="name">Name</th>
+<th id="city">City</th>
+<th id="state">State</th>
+<th id="zip">Zip</th>
+<th>Remove</th>
+</tr>
+<% for (School school : schools) { %>
+	<tr>
+	<td><a href="viewschool/<%=school.getId()%>/detail.html"><%=school.getName()%></a></td>
+	<td><%=school.getCity()%></td>
+	<td><%=school.getState()%></td>
+	<td><%=school.getZip()%></td>
+	<td><a href="deleteschool.html?id=<%=school.getId()%>">delete</a></td>
+	</tr>
+<% } %>
+</table>
 <hr>
+<script>
+	function tableSort(sortBy) {
+		window.location.search = 'sortBy=' + sortBy;
+	}
+	
+	function listenForClicks() {
+		var cols = document.getElementById("headerRow").getElementsByTagName("th");
+		for(var i=0, size=cols.length; i < size; i++) {
+			if(cols[i].id) {
+				cols[i].addEventListener("click", function() { tableSort(this.id); }, false);
+			}
+		}
+	}
+	
+	listenForClicks();
+</script>
 </body>
 </html>

@@ -46,7 +46,9 @@ Students:<br/>
 	function listenForClicks() {
 		var cols = document.getElementById("headerRow").getElementsByTagName("th");
 		for(var i=0, size=cols.length; i < size; i++) {
-			cols[i].addEventListener("click", function() { tableSort(this.id); }, false);
+			if(cols[i]) {
+				cols[i].addEventListener("click", function() { tableSort(this.id); }, false);
+			}
 		}
 	}
 	

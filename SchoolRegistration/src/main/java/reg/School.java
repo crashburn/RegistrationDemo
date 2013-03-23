@@ -12,8 +12,20 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Schools_name",
+                query="SELECT s FROM School s ORDER BY s.name"),
+    @NamedQuery(name="Schools_city",
+                query="SELECT s FROM School s ORDER BY s.address.city"),
+    @NamedQuery(name="Schools_state",
+                query="SELECT s FROM School s ORDER BY s.address.state"),
+    @NamedQuery(name="Schools_zip",
+                query="SELECT s FROM School s ORDER BY s.address.zip"),
+}) 
 public class School {
 	private static final long serialVersionUID = 1L;
 	   
@@ -93,7 +105,7 @@ public class School {
 	}
 
 	public String getZip() {
-		return address.getState();
+		return address.getZip();
 	}
 
 	public void setZip(String zip) {

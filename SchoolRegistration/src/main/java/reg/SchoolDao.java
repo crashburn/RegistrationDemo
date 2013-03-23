@@ -36,11 +36,23 @@ public class SchoolDao {
 		   return em.find(School.class, id);
 	   }
 
-	   // Retrieves all the guests:
+	   // Retrieves all the schools
 	   public List<School> getAllSchools() {
 		   TypedQuery<School> query =
 	            em.createQuery("SELECT sch FROM School sch ORDER BY sch.id", School.class);
 		   return query.getResultList();
+	   }
+
+	   // Retrieves all the schools, with paging and sorting:
+	   public List<School> getAllSchools(int aPageIndex, int aPageSize, String aSortBy) {
+		   String sortBy = (aSortBy != null) ? aSortBy : "name";
+		   TypedQuery<School> query =
+		   		em.createNamedQuery("Schools_" + sortBy, School.class);
+		   List<School> results =
+				      query.setFirstResult(aPageIndex * aPageSize)
+				           .setMaxResults(aPageSize)
+				           .getResultList();
+		   return results;
 	   }
 	   
 	   @Transactional

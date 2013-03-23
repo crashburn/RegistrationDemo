@@ -8,6 +8,7 @@
  */
 package reg;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
@@ -36,7 +37,18 @@ public class RegistrationController {
 
    @RequestMapping(value = "/schools")
    public ModelAndView getSchools(HttpServletRequest request) {
-      return new ModelAndView("schools.jsp", "schoolDao", schoolDao);
+	   String pageIn = request.getParameter("pageIndex");
+	   String pageSort = request.getParameter("sortBy");
+	   List<School> schools = null;
+	   try {
+		   int pageIndex = (pageIn != null) ? Integer.parseInt(pageIn) : 0; 
+		   schools = schoolDao.getAllSchools(pageIndex, PAGE_SIZE, pageSort);
+	   }
+	   catch(NumberFormatException nfe) {
+		   logger.severe("could not interpret page: " + pageIn);
+		   schools = new ArrayList<School>();
+	   }
+	   return new ModelAndView("schools.jsp", "schools", schools);
    }
 
    @RequestMapping(value = "/viewschool/{schoolId}/detail")
