@@ -38,29 +38,49 @@ public class RegistrationController {
    @RequestMapping(value = "/schools")
    public ModelAndView getSchools(HttpServletRequest request) {
 	   String pageIn = request.getParameter("pageIndex");
-	   String pageSort = request.getParameter("sortBy");
+	   String pageSort = (request.getParameter("sortBy") != null) ? request.getParameter("sortBy") : "name";
 	   List<School> schools = null;
+	   ModelAndView mav = new ModelAndView("schools.jsp");
+	   int currentPageIndex = 0;
+	   int maxPageIndex = 0;
 	   try {
-		   int pageIndex = (pageIn != null) ? Integer.parseInt(pageIn) : 0; 
-		   schools = schoolDao.getAllSchools(pageIndex, PAGE_SIZE, pageSort);
+		   // Get the table page indices
+		   currentPageIndex = (pageIn != null) ? Integer.parseInt(pageIn) : 0; 
+		   maxPageIndex = getMaxPageIndex(schoolDao.getSchoolCount());
+		   
+		   // Get the schools
+		   schools = schoolDao.getAllSchools(currentPageIndex, PAGE_SIZE, pageSort);
 	   }
 	   catch(NumberFormatException nfe) {
 		   logger.severe("could not interpret page: " + pageIn);
 		   schools = new ArrayList<School>();
 	   }
-	   return new ModelAndView("schools.jsp", "schools", schools);
+	   mav.addObject("schools", schools);
+	   mav.addObject("currentPageIndex", currentPageIndex);
+	   mav.addObject("maxPageIndex", maxPageIndex);
+	   mav.addObject("pageSort", pageSort);
+	   return mav;
    }
 
    @RequestMapping(value = "/viewschool/{schoolId}/detail")
    public ModelAndView viewSchool(HttpServletRequest request, @PathVariable String schoolId) {
 	   //String schoolId = request.getParameter("id");
 	   String pageIn = request.getParameter("pageIndex");
-	   String pageSort = request.getParameter("sortBy");
+	   String pageSort = (request.getParameter("sortBy") != null) ? request.getParameter("sortBy") : "lastName";
+	   int currentPageIndex = 0;
+	   int maxPageIndex = 0;
 	   try {
 		   // Populate the school
 		   long id = Long.parseLong(schoolId);
 		   School school = schoolDao.retrieve(id);
 		   ModelAndView mav = new ModelAndView("school.jsp", "school", school);
+
+		   // Get the table page indices
+		   currentPageIndex = (pageIn != null) ? Integer.parseInt(pageIn) : 0; 
+		   maxPageIndex = getMaxPageIndex(studentDao.getStudentCountBySchool(school));
+		   mav.addObject("currentPageIndex", currentPageIndex);
+		   mav.addObject("maxPageIndex", maxPageIndex);
+		   mav.addObject("pageSort", pageSort);
 		   
 		   // Populate the students
 		   int pageIndex = (pageIn != null) ? Integer.parseInt(pageIn) : 0; 
@@ -76,7 +96,7 @@ public class RegistrationController {
    }
 
    @RequestMapping(value = "/deleteschool")
-   public ModelAndView deleteSchool(HttpServletRequest request) {
+   public String deleteSchool(HttpServletRequest request) {
 	   String in = request.getParameter("id");
 	   try {
 		   long id = Long.parseLong(in);
@@ -85,11 +105,11 @@ public class RegistrationController {
 	   catch(NumberFormatException nfe) {
 		   logger.severe("could not interpret school id: " + in);
 	   }
-	   return new ModelAndView("schools.jsp", "schoolDao", schoolDao);
+	   return "redirect:/schools.html";
    }
 
    @RequestMapping(value = "/newschool", method = RequestMethod.POST)
-   public ModelAndView createSchool(HttpServletRequest request) {
+   public String createSchool(HttpServletRequest request) {
       // Handle a new guest (if any):
       String name = request.getParameter("name");
       String street = request.getParameter("street");
@@ -105,7 +125,7 @@ public class RegistrationController {
     	  School newSchool = new School(name, minGradeLevel, maxGradeLevel, address);
     	  schoolDao.persist(newSchool);
       }
-      return new ModelAndView("schools.jsp", "schoolDao", schoolDao);
+      return "redirect:/schools.html";
    }
 
    @RequestMapping(value = "/students")
@@ -204,5 +224,15 @@ public class RegistrationController {
 		  logger.severe("could not interpret ids: " + studentIn + "," + schoolIn);
 	  }
       return new ModelAndView("students.jsp", "studentDao", studentDao);
+   }
+   
+   private int getMaxPageIndex(long totalRecordCount) {
+	   long max = totalRecordCount / PAGE_SIZE;
+	   long mod = totalRecordCount % PAGE_SIZE;
+	   System.out.println("max: " + max + " mod: " + mod);
+	   if( (max > 0) && (mod == 0) ) {
+		   max--;
+	   }
+	   return (int) max;
    }
 }

@@ -48,11 +48,10 @@ public class StudentDao {
 		   return query.getResultList();
 	   }
 
-	   // Retrieves a page of students:
+	   // Retrieves a page of students by school:
 	   public List<Student> getStudentsBySchool(School school, int aPageIndex, int aPageSize, String aSortBy) {
 		   String sortBy = (aSortBy != null) ? aSortBy : "lastName";
 		   TypedQuery<Student> query =
-	       //     em.createQuery("SELECT s FROM Student s WHERE s.school = :school ORDER BY s.lastName", Student.class);
 		   		em.createNamedQuery("Student.bySchool_" + sortBy, Student.class);
 		   query.setParameter("school", school);
 		   List<Student> results =
@@ -60,6 +59,14 @@ public class StudentDao {
 				           .setMaxResults(aPageSize)
 				           .getResultList();
 		   return results;
+	   }
+	   
+	   // Retrieves a count of students by school:
+	   public long getStudentCountBySchool(School school) {
+		   TypedQuery<Long> query =
+				   em.createQuery("SELECT COUNT(s) FROM Student s WHERE s.school = :school", Long.class);
+		   query.setParameter("school", school);
+		   return query.getSingleResult();
 	   }
 	   
 	   @Transactional

@@ -37,6 +37,13 @@ public class SchoolDao {
 	   }
 
 	   // Retrieves all the schools
+	   public long getSchoolCount() {
+		   TypedQuery<Long> query =
+	            em.createQuery("SELECT COUNT(sch) FROM School sch", Long.class);
+		   return query.getSingleResult();
+	   }
+
+	   // Retrieves all the schools
 	   public List<School> getAllSchools() {
 		   TypedQuery<School> query =
 	            em.createQuery("SELECT sch FROM School sch ORDER BY sch.id", School.class);

@@ -9,6 +9,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <%@page import="reg.*"%>
 <jsp:useBean id="school" type="reg.School" scope="request" />
 <jsp:useBean id="students" type="java.util.List<Student>" scope="request" />
+<jsp:useBean id="currentPageIndex" type="java.lang.Integer" scope="request" />
+<jsp:useBean id="maxPageIndex" type="java.lang.Integer" scope="request" />
+<jsp:useBean id="pageSort" type="java.lang.String" scope="request" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,21 +41,9 @@ Students:<br/>
 	</tr>
 <% } %>
 </table>
-<script>
-	function tableSort(sortBy) {
-		window.location.search = 'sortBy=' + sortBy;
-	}
-	
-	function listenForClicks() {
-		var cols = document.getElementById("headerRow").getElementsByTagName("th");
-		for(var i=0, size=cols.length; i < size; i++) {
-			if(cols[i]) {
-				cols[i].addEventListener("click", function() { tableSort(this.id); }, false);
-			}
-		}
-	}
-	
-	listenForClicks();
-</script>
+<div id="pagination" data-current-page="<%=currentPageIndex %>" data-max-page="<%=maxPageIndex %>", data-current-sort="<%=pageSort%>">
+	<span id="prevPage">&lt;</span><span>Page <%=currentPageIndex+1 %> of <%=maxPageIndex+1 %></span><span id="nextPage">&gt;</span>
+</div>
+<script type="text/javascript" src="/scripts/table.js"></script>
 </body>
 </html>

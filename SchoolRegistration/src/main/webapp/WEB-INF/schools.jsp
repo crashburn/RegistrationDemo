@@ -8,6 +8,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="reg.*"%>
 <jsp:useBean id="schools" type="java.util.List<School>" scope="request" />
+<jsp:useBean id="currentPageIndex" type="java.lang.Integer" scope="request" />
+<jsp:useBean id="maxPageIndex" type="java.lang.Integer" scope="request" />
+<jsp:useBean id="pageSort" type="java.lang.String" scope="request" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,22 +55,10 @@ Schools:<br/>
 	</tr>
 <% } %>
 </table>
+<div id="pagination" data-current-page="<%=currentPageIndex %>" data-max-page="<%=maxPageIndex %>", data-current-sort="<%=pageSort%>">
+	<span id="prevPage">&lt;</span><span>Page <%=currentPageIndex+1 %> of <%=maxPageIndex+1 %></span><span id="nextPage">&gt;</span>
+</div>
 <hr>
-<script>
-	function tableSort(sortBy) {
-		window.location.search = 'sortBy=' + sortBy;
-	}
-	
-	function listenForClicks() {
-		var cols = document.getElementById("headerRow").getElementsByTagName("th");
-		for(var i=0, size=cols.length; i < size; i++) {
-			if(cols[i].id) {
-				cols[i].addEventListener("click", function() { tableSort(this.id); }, false);
-			}
-		}
-	}
-	
-	listenForClicks();
-</script>
+<script type="text/javascript" src="/scripts/table.js"></script>
 </body>
 </html>
