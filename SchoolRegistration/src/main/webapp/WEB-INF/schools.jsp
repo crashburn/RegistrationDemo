@@ -55,7 +55,7 @@ Schools:<br/>
 	</tr>
 <% } %>
 </table>
-<div id="pagination" data-current-page="<%=currentPageIndex %>" data-max-page="<%=maxPageIndex %>", data-current-sort="<%=pageSort%>">
+<div id="pagination" data-current-page="<%=currentPageIndex %>" data-max-page="<%=maxPageIndex %>" data-current-sort="<%=pageSort%>">
 	<span id="prevPage">&lt;</span><span>Page <%=currentPageIndex+1 %> of <%=maxPageIndex+1 %></span><span id="nextPage">&gt;</span>
 </div>
 <hr>
