@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class RegistrationController {
@@ -153,7 +152,7 @@ public class RegistrationController {
    }
 
    @RequestMapping(value = "/deletestudent")
-   public ModelAndView deleteStudent(HttpServletRequest request) {
+   public String deleteStudent(HttpServletRequest request) {
 	   String in = request.getParameter("id");
 	   try {
 		   long id = Long.parseLong(in);
@@ -162,7 +161,7 @@ public class RegistrationController {
 	   catch(NumberFormatException nfe) {
 		   logger.severe("could not interpret student id: " + in);
 	   }
-	   return new ModelAndView("students.jsp", "studentDao", studentDao);
+	   return "redirect:/students.html";
    }
    
 }
