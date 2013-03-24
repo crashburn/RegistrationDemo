@@ -93,9 +93,18 @@ public class RegistrationController {
 	   return "redirect:/schools/" + schoolId + "/detail.html";
    }
 
-   @RequestMapping(value = "/students")
-   public ModelAndView getStudents(HttpServletRequest request) {
-      return new ModelAndView("students.jsp", "studentDao", studentDao);
+   @RequestMapping(value = "/students", method = RequestMethod.GET)
+   public String getStudents(@ModelAttribute TableState tableState, Model model) {
+	   
+	   // Adjust the table state
+	   tableState.setDefaultSortBy("lastName");
+	   tableState.setMaxPageIndex(getMaxPageIndex(studentDao.getStudentCount()));
+		   
+	   // Populate the schools
+	   List<Student> students = studentDao.getAllStudents(tableState.getPageIndex(), PAGE_SIZE, tableState.getSortBy());
+	   model.addAttribute("students", students);
+
+      return "students.jsp";
    }
    
    @RequestMapping(value = "/viewstudent")

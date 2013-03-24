@@ -23,6 +23,16 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
+    @NamedQuery(name="Students_lastName",
+            	query="SELECT s FROM Student s ORDER BY s.lastName"),
+	@NamedQuery(name="Students_firstName",
+	            query="SELECT s FROM Student s ORDER BY s.firstName"),
+	@NamedQuery(name="Students_sex",
+	            query="SELECT s FROM Student s ORDER BY s.sex"),
+	@NamedQuery(name="Students_school",
+	            query="SELECT s FROM Student s LEFT JOIN s.school sch ORDER BY sch.name"),
+	@NamedQuery(name="Students_gradeLevel",
+	            query="SELECT s FROM Student s ORDER BY s.gradeLevel"),
     @NamedQuery(name="Student.bySchool_lastName",
                 query="SELECT s FROM Student s WHERE s.school = :school ORDER BY s.lastName"),
     @NamedQuery(name="Student.bySchool_firstName",

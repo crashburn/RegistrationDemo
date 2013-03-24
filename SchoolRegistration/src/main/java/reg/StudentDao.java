@@ -42,11 +42,30 @@ public class StudentDao {
 		   return em.find(Student.class, id);
 	   }
 
+	   // Retrieves a count of all the students
+	   public long getStudentCount() {
+		   TypedQuery<Long> query =
+	            em.createQuery("SELECT COUNT(s) FROM Student s", Long.class);
+		   return query.getSingleResult();
+	   }
+
 	   // Retrieves all the students:
 	   public List<Student> getAllStudents() {
 		   TypedQuery<Student> query =
 	            em.createQuery("SELECT s FROM Student s ORDER BY s.id", Student.class);
 		   return query.getResultList();
+	   }
+
+	   // Retrieves all the students, with paging and sorting
+	   public List<Student> getAllStudents(int aPageIndex, int aPageSize, String aSortBy) {
+		   String sortBy = (aSortBy != null) ? aSortBy : "lastName";
+		   TypedQuery<Student> query =
+		   		em.createNamedQuery("Students_" + sortBy, Student.class);
+		   List<Student> results =
+				      query.setFirstResult(aPageIndex * aPageSize)
+				           .setMaxResults(aPageSize)
+				           .getResultList();
+		   return results;
 	   }
 
 	   // Retrieves a page of students by school:

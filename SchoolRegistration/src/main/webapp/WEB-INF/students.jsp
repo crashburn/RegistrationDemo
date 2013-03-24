@@ -7,7 +7,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="reg.*"%>
-<jsp:useBean id="studentDao" type="reg.StudentDao" scope="request" />
+<jsp:useBean id="students" type="java.util.List<Student>" scope="request" />
+<jsp:useBean id="tableState" type="reg.TableState" scope="request" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,15 +42,33 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 		<input type="submit" value="Add" />
 	</form>
 <hr>
-<ol>
-<%
-   for (Student student : studentDao.getAllStudents()) {
-%>
-<li><%=student.getLastName()%>,<%=student.getFirstName()%> <a href="viewstudent.html?id=<%=student.getId()%>">View</a> <a href="deletestudent.html?id=<%=student.getId()%>">delete</a></li>
-<%
-   }
-%>
-</ol>
+<h1>Students</h1>
+<table>
+<tr id="headerRow">
+<th id="lastName">Last Name</th>
+<th id="firstName">First Name</th>
+<th id="sex">Sex</th>
+<th id="school">School Name</th>
+<th id="gradeLevel">Grade Level</th>
+</tr>
+<% for (Student student : students) { %>
+	<tr>
+	<td><%=student.getLastName()%></td>
+	<td><%=student.getFirstName()%></td>
+	<td><%=student.getSex()%></td>
+	<td><%=((student.getSchool() != null) ? student.getSchool().getName() : "Not registered") %></td>
+	<td><%=student.getGradeLevel().getDisplayValue()%></td>
+	</tr>
+<% } %>
+</table>
+<div id="pagination" data-current-page="<%=tableState.getPageIndex() %>" 
+					 data-max-page="<%=tableState.getMaxPageIndex() %>" 
+					 data-current-sort="<%=tableState.getSortBy()%>">
+	<span id="prevPage">&lt;</span>
+	<span>Page <%=tableState.getPageNumber() %> of <%=tableState.getMaxPageNumber() %></span>
+	<span id="nextPage">&gt;</span>
+</div>
 <hr>
+<script type="text/javascript" src="/scripts/table.js"></script>
 </body>
 </html>
