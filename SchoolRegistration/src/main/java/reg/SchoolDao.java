@@ -59,6 +59,20 @@ public class SchoolDao {
 				           .getResultList();
 		   return results;
 	   }
+
+	   // Retrieves all the schools in a given zip code
+	   public List<School> getAllSchoolsByZipAndGradeLevel(String zip, GradeLevel gl) {
+		   TypedQuery<School> query =
+	            em.createQuery(
+	            		"SELECT sch FROM School sch " + 
+	            		"WHERE sch.address.zip = :zip " +
+	            		"AND sch.minGradeLevel <= :gl " +
+	            		"AND sch.maxGradeLevel >= :gl " +
+	            		"ORDER BY sch.name", School.class);
+		   query.setParameter("zip", zip);
+		   query.setParameter("gl", gl);
+		   return query.getResultList();
+	   }
 	   
 	   @Transactional
 	   public void delete(long id) {

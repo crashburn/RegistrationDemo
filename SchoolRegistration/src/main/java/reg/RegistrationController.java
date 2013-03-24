@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -107,19 +108,17 @@ public class RegistrationController {
       return "students.jsp";
    }
    
-   @RequestMapping(value = "/viewstudent")
-   public ModelAndView viewStudent(HttpServletRequest request) {
-	   String in = request.getParameter("id");
-	   try {
-		   long id = Long.parseLong(in);
-		   ModelAndView mav = new ModelAndView("student.jsp", "student", studentDao.retrieve(id));
-		   mav.addObject("schoolDao", schoolDao);
-		   return mav;
-	   }
-	   catch(NumberFormatException nfe) {
-		   logger.severe("could not interpret student id: " + in);
-		   return new ModelAndView("students.jsp", "studentDao", studentDao);
-	   }
+   @RequestMapping(value = "/students/{studentId}/detail", method = RequestMethod.GET)
+   public String viewStudent(@PathVariable long studentId, Model model) {
+
+	   // Populate the school
+	   Student student = studentDao.retrieve(studentId);
+	   model.addAttribute(student);
+	   
+	   List<School> schools = schoolDao.getAllSchoolsByZipAndGradeLevel(student.getAddress().getZip(), student.getGradeLevel());
+	   model.addAttribute("schools", schools);
+
+	   return "student.jsp";
    }
 
    @RequestMapping(value = "/deletestudent")
@@ -180,30 +179,16 @@ public class RegistrationController {
    }
 
 
-   @RequestMapping(value = "/register", method = RequestMethod.POST)
-   public ModelAndView register(HttpServletRequest request) {
-      // Handle a new guest (if any):
-      String studentIn = request.getParameter("studentId");
-      String schoolIn = request.getParameter("choiceId");
-      try {
-    	  long studentId = Long.parseLong(studentIn);
-    	  long schoolId = Long.parseLong(schoolIn);
-    	  studentDao.register(studentId, schoolId);
+   @RequestMapping(value = "/students/{studentId}/detail", method = RequestMethod.POST, params="verb=register")
+   public String register(@PathVariable long studentId, @RequestParam long schoolId) {
 
-    	  ModelAndView mav = new ModelAndView("student.jsp", "student", studentDao.retrieve(studentId));
-		   mav.addObject("schoolDao", schoolDao);
-		   return mav;
-      }
-	  catch(NumberFormatException nfe) {
-		  logger.severe("could not interpret ids: " + studentIn + "," + schoolIn);
-	  }
-      return new ModelAndView("students.jsp", "studentDao", studentDao);
+	   studentDao.register(studentId, schoolId);
+	   return "redirect:/students.html";
    }
    
    private int getMaxPageIndex(long totalRecordCount) {
 	   long max = totalRecordCount / PAGE_SIZE;
 	   long mod = totalRecordCount % PAGE_SIZE;
-	   System.out.println("max: " + max + " mod: " + mod);
 	   if( (max > 0) && (mod == 0) ) {
 		   max--;
 	   }

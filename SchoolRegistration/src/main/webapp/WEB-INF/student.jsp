@@ -8,15 +8,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="reg.*"%>
 <jsp:useBean id="student" type="reg.Student" scope="request" />
-<jsp:useBean id="schoolDao" type="reg.SchoolDao" scope="request" />
+<jsp:useBean id="schools" type="java.util.List<School>" scope="request" />
 <!DOCTYPE html>
 <html>
 <head>
 <title>Student Details</title>
 </head>
 <body>
-<a href="students.html">Back to Students List</a>
-<br/>
+<a href="/students.html">Back to Students List</a>
+<hr/>
+<h1>Student Profile</h1>
 <% if(student != null) { %>
 	First Name: <%=student.getFirstName()%><br/>
 	Last Name: <%=student.getLastName()%><br/>
@@ -32,19 +33,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 				<%=student.getPhoneNumber().getExchange()%>-<%=student.getPhoneNumber().getSubscriberNumber()%><br/>
 
 	Grade Level: <%=student.getGradeLevel().getDisplayValue()%><br/>
-
 	<% School school = student.getSchool(); %>
    	School: <%=((school!=null) ? school.getName() : "Not registered") %>
-	<form method="POST" action="register.html">
-		<input type="hidden" name="studentId" value="<%=student.getId() %>" />
+	
+	<hr/>
+	<h2>Matching Schools by Zip and Grade Level</h2>
+	<form method="POST" action="/students/<%=student.getId() %>/detail.html">
+		<input type="hidden" name="verb" value="register" />
 		<%
-   		for (School choice : schoolDao.getAllSchools()) {
+   		for (School choice : schools) {
 		%>
-			<input type="radio" name="choiceId" value="<%=choice.getId()%>" /><%=choice.getName()%>
+			<input type="radio" name="schoolId" value="<%=choice.getId()%>" /><%=choice.getName()%>
 		<%
    		}
 		%>
-		<input type="submit" value="Add" />
+		<input type="submit" value="Register" />
 	</form>
 <% } %>
 

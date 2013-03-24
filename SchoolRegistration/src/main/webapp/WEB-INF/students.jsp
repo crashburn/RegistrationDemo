@@ -53,7 +53,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 </tr>
 <% for (Student student : students) { %>
 	<tr>
-	<td><%=student.getLastName()%></td>
+	<td><a href="/students/<%=student.getId()%>/detail.html"><%=student.getLastName()%></a></td>
 	<td><%=student.getFirstName()%></td>
 	<td><%=student.getSex()%></td>
 	<td><%=((student.getSchool() != null) ? student.getSchool().getName() : "Not registered") %></td>
