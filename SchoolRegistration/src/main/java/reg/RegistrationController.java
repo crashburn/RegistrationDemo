@@ -107,6 +107,25 @@ public class RegistrationController {
 
       return "students.jsp";
    }
+   
+   @RequestMapping(value = "/students", method = RequestMethod.POST)
+   public String addStudent(@ModelAttribute Student student, 
+		   					@ModelAttribute Address address, 
+		   					@ModelAttribute PhoneNumber phoneNumber,
+		   					@RequestParam int birthMonth,
+		   					@RequestParam int birthDay,
+		   					@RequestParam int birthYear) {
+
+	   // Combine the model objects
+	   student.setAddress(address);
+	   student.setPhoneNumber(phoneNumber);
+	   student.setBirthdate(new GregorianCalendar(birthYear, birthMonth-1, birthDay));
+	   
+	   // Persist the new student
+	   studentDao.persist(student);
+	   
+	   return "redirect:/students/" + student.getId() + "/detail.html";
+   }
 
    @RequestMapping(value = "/students/new", method = RequestMethod.GET)
    public String initNewStudent() {
@@ -126,6 +145,13 @@ public class RegistrationController {
 	   return "student.jsp";
    }
 
+   @RequestMapping(value = "/students/{studentId}/detail", method = RequestMethod.POST, params="verb=register")
+   public String register(@PathVariable long studentId, @RequestParam long schoolId) {
+
+	   studentDao.register(studentId, schoolId);
+	   return "redirect:/students.html";
+   }
+
    @RequestMapping(value = "/deletestudent")
    public ModelAndView deleteStudent(HttpServletRequest request) {
 	   String in = request.getParameter("id");
@@ -137,30 +163,6 @@ public class RegistrationController {
 		   logger.severe("could not interpret student id: " + in);
 	   }
 	   return new ModelAndView("students.jsp", "studentDao", studentDao);
-   }
-   
-   @RequestMapping(value = "/students", method = RequestMethod.POST)
-   public String addStudent(@ModelAttribute Student student, 
-		   					@ModelAttribute Address address, 
-		   					@ModelAttribute PhoneNumber phoneNumber,
-		   					@RequestParam int birthMonth,
-		   					@RequestParam int birthDay,
-		   					@RequestParam int birthYear) {
-
-	   student.setAddress(address);
-	   student.setPhoneNumber(phoneNumber);
-	   student.setBirthdate(new GregorianCalendar(birthYear, birthMonth-1, birthDay));
-	   
-	   // Persist the new student
-	   studentDao.persist(student);
-	   return "redirect:/students.html";
-   }
-
-   @RequestMapping(value = "/students/{studentId}/detail", method = RequestMethod.POST, params="verb=register")
-   public String register(@PathVariable long studentId, @RequestParam long schoolId) {
-
-	   studentDao.register(studentId, schoolId);
-	   return "redirect:/students.html";
    }
    
 }

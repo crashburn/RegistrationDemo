@@ -15,33 +15,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <title>Students</title>
 </head>
 <body>
-	<form method="POST" action="/students.html">
-		First Name: <input type="text" name="firstName" /> 
-		Last Name: <input type="text" name="lastName" /> <br/>
-		Sex: <select name="sex"> 
-			<% for(Sex s : Sex.values()) { %>
-			<option value="<%=s.name() %>"><%=s %></option>
-			<% } %>
-		</select>
-		Grade Level: <select name="gradeLevel"> 
-			<% for(GradeLevel gl : GradeLevel.values()) { %>
-			<option value="<%=gl.name() %>"><%=gl.getDisplayValue() %></option>
-			<% } %>
-		</select> 
-		Birth Date: (MM)<input type="text" name="birthMonth" /> 
-		(DD)<input type="text" name="birthDay" /> 
-		(YYYY)<input type="text" name="birthYear" /> <br/> 
-		Street: <input type="text" name="street" />
-		City: <input type="text" name="city" /> 
-		State: <input type="text" name="state" /> 
-		Zip: <input type="text" name="zip" /> <br/> 
-		Phone Number: <input type="text" name="areaCode" /> 
-		<input type="text" name="exchange" /> 
-		<input type="text" name="subscriberNumber" /> <br/> 
-		
-		<input type="submit" value="Add" />
-	</form>
-<hr>
 <h1>Students</h1>
 <table>
 <tr id="headerRow">
@@ -69,6 +42,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 	<span id="nextPage">&gt;</span>
 </div>
 <hr>
+<div><span class="button"><a href="/students/new.html">Add a Student</a></span></div>
 <script type="text/javascript" src="/scripts/table.js"></script>
 </body>
 </html>
