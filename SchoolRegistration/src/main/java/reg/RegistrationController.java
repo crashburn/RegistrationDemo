@@ -42,7 +42,7 @@ public class RegistrationController {
 	   
 	   // Adjust the table state
 	   tableState.setDefaultSortBy("name");
-	   tableState.setMaxPageIndex(getMaxPageIndex(schoolDao.getSchoolCount()));
+	   tableState.setMaxPageIndex((int)schoolDao.getSchoolCount(), PAGE_SIZE);
 		   
 	   // Populate the schools
 	   List<School> schools = schoolDao.getAllSchools(tableState.getPageIndex(), PAGE_SIZE, tableState.getSortBy());
@@ -73,7 +73,7 @@ public class RegistrationController {
 
 	   //Adjust the table state
 	   tableState.setDefaultSortBy("lastName");
-	   tableState.setMaxPageIndex(getMaxPageIndex(studentDao.getStudentCountBySchool(school)));
+	   tableState.setMaxPageIndex((int)studentDao.getStudentCountBySchool(school), PAGE_SIZE);
 
 	   // Populate the students
 	   List<Student> students = studentDao.getStudentsBySchool(school, tableState.getPageIndex(), PAGE_SIZE, tableState.getSortBy());
@@ -99,7 +99,7 @@ public class RegistrationController {
 	   
 	   // Adjust the table state
 	   tableState.setDefaultSortBy("lastName");
-	   tableState.setMaxPageIndex(getMaxPageIndex(studentDao.getStudentCount()));
+	   tableState.setMaxPageIndex((int)studentDao.getStudentCount(), PAGE_SIZE);
 		   
 	   // Populate the schools
 	   List<Student> students = studentDao.getAllStudents(tableState.getPageIndex(), PAGE_SIZE, tableState.getSortBy());
@@ -186,12 +186,4 @@ public class RegistrationController {
 	   return "redirect:/students.html";
    }
    
-   private int getMaxPageIndex(long totalRecordCount) {
-	   long max = totalRecordCount / PAGE_SIZE;
-	   long mod = totalRecordCount % PAGE_SIZE;
-	   if( (max > 0) && (mod == 0) ) {
-		   max--;
-	   }
-	   return (int) max;
-   }
 }

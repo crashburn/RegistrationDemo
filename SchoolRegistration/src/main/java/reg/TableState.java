@@ -28,7 +28,14 @@ public class TableState {
 	public void setMaxPageIndex(int maxPageIndex) {
 		this.maxPageIndex = maxPageIndex;
 	}
-	
+	public void setMaxPageIndex(int totalRecordCount, int pageSize) {
+		int max = totalRecordCount / pageSize;
+		int mod = totalRecordCount % pageSize;
+		if( (max > 0) && (mod == 0) ) {
+			max--;
+		}
+		this.maxPageIndex = max;
+	}
 	/**
 	 * Page number makes more sense to humans...it adjusts the 
 	 * index by 1 to account for the index being zero-based
