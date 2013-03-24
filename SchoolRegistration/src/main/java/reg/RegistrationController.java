@@ -8,7 +8,6 @@
  */
 package reg;
 
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,35 +34,36 @@ public class RegistrationController {
    @Autowired
    private StudentDao studentDao;
    
-   Logger logger = Logger.getLogger(SchoolDao.class.getName());
+   Logger logger = Logger.getLogger(RegistrationController.class.getName());
 
-   @RequestMapping(value = "/schools")
-   public ModelAndView getSchools(HttpServletRequest request) {
-	   String pageIn = request.getParameter("pageIndex");
-	   String pageSort = (request.getParameter("sortBy") != null) ? request.getParameter("sortBy") : "name";
-	   List<School> schools = null;
-	   ModelAndView mav = new ModelAndView("schools.jsp");
-	   int currentPageIndex = 0;
-	   int maxPageIndex = 0;
-	   try {
-		   // Get the table page indices
-		   currentPageIndex = (pageIn != null) ? Integer.parseInt(pageIn) : 0; 
-		   maxPageIndex = getMaxPageIndex(schoolDao.getSchoolCount());
+   @RequestMapping(value = "/schools", method = RequestMethod.GET)
+   public String getSchools(@ModelAttribute TableState tableState, Model model) {
+	   
+	   // Adjust the table state
+	   tableState.setDefaultSortBy("name");
+	   tableState.setMaxPageIndex(getMaxPageIndex(schoolDao.getSchoolCount()));
 		   
-		   // Get the schools
-		   schools = schoolDao.getAllSchools(currentPageIndex, PAGE_SIZE, pageSort);
-	   }
-	   catch(NumberFormatException nfe) {
-		   logger.severe("could not interpret page: " + pageIn);
-		   schools = new ArrayList<School>();
-	   }
-	   mav.addObject("schools", schools);
-	   mav.addObject("currentPageIndex", currentPageIndex);
-	   mav.addObject("maxPageIndex", maxPageIndex);
-	   mav.addObject("pageSort", pageSort);
-	   return mav;
+	   // Populate the schools
+	   List<School> schools = schoolDao.getAllSchools(tableState.getPageIndex(), PAGE_SIZE, tableState.getSortBy());
+	   model.addAttribute("schools", schools);
+
+	   return "schools.jsp";
    }
 
+   @RequestMapping(value = "/schools", method = RequestMethod.POST)
+   public String addSchool(@ModelAttribute School school) {
+
+	   // Persist the new school
+	   schoolDao.persist(school);
+	   return "redirect:/schools.html";
+   }
+
+   @RequestMapping(value = "/schools/new", method = RequestMethod.GET)
+   public String initNewSchool() {
+	   return "newschool.jsp";
+   }
+   
+   
    @RequestMapping(value = "/viewschool/{schoolId}/detail")
    public ModelAndView viewSchool(HttpServletRequest request, @PathVariable String schoolId) {
 	   //String schoolId = request.getParameter("id");
@@ -106,26 +108,6 @@ public class RegistrationController {
 		   logger.severe("could not interpret school id: " + in);
 	   }
 	   return "redirect:/schools.html";
-   }
-
-   @RequestMapping(value = "/newschool", method = RequestMethod.POST)
-   public String createSchool(HttpServletRequest request) {
-      // Handle a new guest (if any):
-      String name = request.getParameter("name");
-      String street = request.getParameter("street");
-      String city = request.getParameter("city");
-      String state = request.getParameter("state");
-      String zip = request.getParameter("zip");
-      String minGL = request.getParameter("minGradeLevel");
-      String maxGL = request.getParameter("maxGradeLevel");
-      if (name != null) {
-    	  GradeLevel minGradeLevel = GradeLevel.valueOf(minGL);
-    	  GradeLevel maxGradeLevel = GradeLevel.valueOf(maxGL);
-    	  Address address = new Address(street, city, state, zip);
-    	  School newSchool = new School(name, minGradeLevel, maxGradeLevel, address);
-    	  schoolDao.persist(newSchool);
-      }
-      return "redirect:/schools.html";
    }
 
    @RequestMapping(value = "/students")

@@ -43,6 +43,7 @@ public class School {
 
 	// Constructors:
 	public School() {
+		address = new Address();
 	}
 
 	public School(String name, GradeLevel aMinGradeLevel, GradeLevel aMaxGradeLevel, Address anAddress) {
@@ -116,11 +117,12 @@ public class School {
 	@Override
 	public String toString() {
 		return  "name: " + getName() + 
+				", street: " + getStreet() + 
 				", city: " + getCity() + 
 				", state: " + getState() + 
+				", zip: " + getZip() + 
 				", min: " + minGradeLevel + 
-				", max: " + maxGradeLevel +
-				", isInRange(L7): " + GradeLevel.L7.isInRange(minGradeLevel, maxGradeLevel);
+				", max: " + maxGradeLevel;
 	}
 
 }
