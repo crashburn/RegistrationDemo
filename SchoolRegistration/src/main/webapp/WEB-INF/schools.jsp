@@ -15,22 +15,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <title>Schools</title>
 </head>
 <body>
-<h1>Schools:</h1>
+<h1>Schools</h1>
 <table>
 <tr id="headerRow">
 <th id="name">Name</th>
 <th id="city">City</th>
 <th id="state">State</th>
 <th id="zip">Zip</th>
-<th>Remove</th>
 </tr>
 <% for (School school : schools) { %>
 	<tr>
-	<td><a href="viewschool/<%=school.getId()%>/detail.html"><%=school.getName()%></a></td>
+	<td><a href="/schools/<%=school.getId()%>/detail.html"><%=school.getName()%></a></td>
 	<td><%=school.getCity()%></td>
 	<td><%=school.getState()%></td>
 	<td><%=school.getZip()%></td>
-	<td><a href="deleteschool.html?id=<%=school.getId()%>">delete</a></td>
 	</tr>
 <% } %>
 </table>
@@ -41,7 +39,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 	<span>Page <%=tableState.getPageNumber() %> of <%=tableState.getMaxPageNumber() %></span>
 	<span id="nextPage">&gt;</span>
 </div>
-<hr>
 <div><span class="button"><a href="/schools/new.html">Add a School</a></span></div>
 <script type="text/javascript" src="/scripts/table.js"></script>
 </body>

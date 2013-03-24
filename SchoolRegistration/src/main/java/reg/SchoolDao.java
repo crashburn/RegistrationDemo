@@ -22,11 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class SchoolDao {
 		Logger logger = Logger.getLogger(SchoolDao.class.getName());
 	
-	// Injected database connection:
 	   @PersistenceContext
 	   private EntityManager em;
 
-	   // Stores a new guest:
 	   @Transactional
 	   public void persist(School school) {
 	      em.persist(school);

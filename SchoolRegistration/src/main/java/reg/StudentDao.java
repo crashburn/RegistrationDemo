@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,22 @@ public class StudentDao {
 				   em.createQuery("SELECT COUNT(s) FROM Student s WHERE s.school = :school", Long.class);
 		   query.setParameter("school", school);
 		   return query.getSingleResult();
+	   }
+	   
+	   @Transactional
+	   public void unenrollStudentsBySchool(long schoolId) {
+		   School school = schoolDao.retrieve(schoolId);
+		   Query query = em.createQuery("UPDATE Student s SET s.school = :none WHERE s.school = :school");
+		   query.setParameter("none", null);
+		   query.setParameter("school", school);
+		   query.executeUpdate();
+	   }
+	   
+	   @Transactional
+	   public void unenrollAllStudents() {
+		   Query query = em.createQuery("UPDATE Student s SET s.school = :none");
+		   query.setParameter("none", null);
+		   query.executeUpdate();
 	   }
 	   
 	   @Transactional

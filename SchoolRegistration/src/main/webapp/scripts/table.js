@@ -1,3 +1,12 @@
+/* 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS 
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN 
+ * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ */
+
 function tableSort(sortBy) {
 	window.location.search = "sortBy=" + sortBy + "&pageIndex=" + getTablePageIndex();
 }
@@ -21,7 +30,7 @@ function getTablePageIndex(increment) {
 function getCurrentPageSort() {
 	return document.getElementById("pagination").getAttribute("data-current-sort");
 }
-function listenForClicks() {
+function listenForTableClicks() {
 	// Sorting
 	var cols = document.getElementById("headerRow").getElementsByTagName("th");
 	for(var i=0, size=cols.length; i < size; i++) {
@@ -36,4 +45,4 @@ function listenForClicks() {
 	nextPage.addEventListener("click", function() { tablePage(1); }, false);
 }
 
-listenForClicks();
+listenForTableClicks();

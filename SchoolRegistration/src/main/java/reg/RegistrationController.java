@@ -62,52 +62,35 @@ public class RegistrationController {
    public String initNewSchool() {
 	   return "newschool.jsp";
    }
-   
-   
-   @RequestMapping(value = "/viewschool/{schoolId}/detail")
-   public ModelAndView viewSchool(HttpServletRequest request, @PathVariable String schoolId) {
-	   //String schoolId = request.getParameter("id");
-	   String pageIn = request.getParameter("pageIndex");
-	   String pageSort = (request.getParameter("sortBy") != null) ? request.getParameter("sortBy") : "lastName";
-	   int currentPageIndex = 0;
-	   int maxPageIndex = 0;
-	   try {
-		   // Populate the school
-		   long id = Long.parseLong(schoolId);
-		   School school = schoolDao.retrieve(id);
-		   ModelAndView mav = new ModelAndView("school.jsp", "school", school);
+    
+   @RequestMapping(value = "/schools/{schoolId}/detail", method = RequestMethod.GET)
+   public String viewSchool(@ModelAttribute TableState tableState, @PathVariable long schoolId, Model model) {
 
-		   // Get the table page indices
-		   currentPageIndex = (pageIn != null) ? Integer.parseInt(pageIn) : 0; 
-		   maxPageIndex = getMaxPageIndex(studentDao.getStudentCountBySchool(school));
-		   mav.addObject("currentPageIndex", currentPageIndex);
-		   mav.addObject("maxPageIndex", maxPageIndex);
-		   mav.addObject("pageSort", pageSort);
-		   
-		   // Populate the students
-		   int pageIndex = (pageIn != null) ? Integer.parseInt(pageIn) : 0; 
-		   List<Student> students = studentDao.getStudentsBySchool(school, pageIndex, PAGE_SIZE, pageSort);
-		   mav.addObject("students", students);
-		   
-		   return mav;
-	   }
-	   catch(NumberFormatException nfe) {
-		   logger.severe("could not interpret school id: " + schoolId);
-		   return new ModelAndView("schools.jsp", "schoolDao", schoolDao);
-	   }
+	   // Populate the school
+	   School school = schoolDao.retrieve(schoolId);
+	   model.addAttribute(school);
+
+	   //Adjust the table state
+	   tableState.setDefaultSortBy("lastName");
+	   tableState.setMaxPageIndex(getMaxPageIndex(studentDao.getStudentCountBySchool(school)));
+
+	   // Populate the students
+	   List<Student> students = studentDao.getStudentsBySchool(school, tableState.getPageIndex(), PAGE_SIZE, tableState.getSortBy());
+	   model.addAttribute("students", students);
+	   
+	   return "school.jsp";
    }
 
-   @RequestMapping(value = "/deleteschool")
-   public String deleteSchool(HttpServletRequest request) {
-	   String in = request.getParameter("id");
-	   try {
-		   long id = Long.parseLong(in);
-		   schoolDao.delete(id);
-	   }
-	   catch(NumberFormatException nfe) {
-		   logger.severe("could not interpret school id: " + in);
-	   }
+   @RequestMapping(value = "/schools/{schoolId}/detail", method = RequestMethod.POST, params="verb=delete")
+   public String deleteSchool(@PathVariable long schoolId) {
+	   studentDao.unenrollStudentsBySchool(schoolId);
+	   schoolDao.delete(schoolId);
 	   return "redirect:/schools.html";
+   }
+
+   @RequestMapping(value = "/schools/{schoolId}/detail", method = RequestMethod.POST, params="verb=edit")
+   public String editSchool(@PathVariable long schoolId) {
+	   return "redirect:/schools/" + schoolId + "/detail.html";
    }
 
    @RequestMapping(value = "/students")
