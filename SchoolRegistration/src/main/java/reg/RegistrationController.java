@@ -107,6 +107,11 @@ public class RegistrationController {
 
       return "students.jsp";
    }
+
+   @RequestMapping(value = "/students/new", method = RequestMethod.GET)
+   public String initNewStudent() {
+	   return "newstudent.jsp";
+   }
    
    @RequestMapping(value = "/students/{studentId}/detail", method = RequestMethod.GET)
    public String viewStudent(@PathVariable long studentId, Model model) {
@@ -133,51 +138,23 @@ public class RegistrationController {
 	   }
 	   return new ModelAndView("students.jsp", "studentDao", studentDao);
    }
+   
+   @RequestMapping(value = "/students", method = RequestMethod.POST)
+   public String addStudent(@ModelAttribute Student student, 
+		   					@ModelAttribute Address address, 
+		   					@ModelAttribute PhoneNumber phoneNumber,
+		   					@RequestParam int birthMonth,
+		   					@RequestParam int birthDay,
+		   					@RequestParam int birthYear) {
 
-   @RequestMapping(value = "/newstudent", method = RequestMethod.POST)
-   public ModelAndView createStudent(HttpServletRequest request) {
-      // Handle a new guest (if any):
-      String firstName = request.getParameter("firstName");
-      String lastName = request.getParameter("lastName");
-      String sex = request.getParameter("sex");
-      String gradeLevel = request.getParameter("gradeLevel");
-      
-      String birthMonth = request.getParameter("birthMonth");
-      String birthDay = request.getParameter("birthDay");
-      String birthYear = request.getParameter("birthYear");
-
-      String street = request.getParameter("street");
-      String city = request.getParameter("city");
-      String state = request.getParameter("state");
-      String zip = request.getParameter("zip");
-
-      String areaCode = request.getParameter("areaCode");
-      String exchange = request.getParameter("exchange");
-      String subscriberNumber = request.getParameter("subscriberNumber");
-
-      if (firstName != null) {
-    	  Student newStudent = new Student();
-    	  newStudent.setFirstName(firstName);
-    	  newStudent.setLastName(lastName);
-    	  newStudent.setSex(Sex.valueOf(sex));
-    	  newStudent.setGradeLevel(GradeLevel.valueOf(gradeLevel));
-    	  newStudent.setBirthdate(
-    			  new GregorianCalendar(
-    					  Integer.parseInt(birthYear)
-    					  ,Integer.parseInt(birthMonth)-1
-    					  ,Integer.parseInt(birthDay)
-    					  )
-    			  );
-    	  newStudent.setAddress(
-    			  new Address(street, city, state, zip)
-    			  );
-    	  newStudent.setPhoneNumber(new PhoneNumber(areaCode, exchange, subscriberNumber));
-    	  
-    	  studentDao.persist(newStudent);
-      }
-      return new ModelAndView("students.jsp", "studentDao", studentDao);
+	   student.setAddress(address);
+	   student.setPhoneNumber(phoneNumber);
+	   student.setBirthdate(new GregorianCalendar(birthYear, birthMonth-1, birthDay));
+	   
+	   // Persist the new student
+	   studentDao.persist(student);
+	   return "redirect:/students.html";
    }
-
 
    @RequestMapping(value = "/students/{studentId}/detail", method = RequestMethod.POST, params="verb=register")
    public String register(@PathVariable long studentId, @RequestParam long schoolId) {

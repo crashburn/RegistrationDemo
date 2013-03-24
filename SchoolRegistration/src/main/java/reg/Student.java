@@ -70,11 +70,8 @@ public class Student {
 
 	// Constructors:
 	public Student() {
-	}
-
-	public Student(String firstName, String lastName) {
-		this.firstName = firstName;
-	    this.lastName = lastName;
+		address = new Address();
+		phoneNumber = new PhoneNumber();
 	}
 	
 	public long getId() {
@@ -176,7 +173,9 @@ public class Student {
 				", last name: " + lastName +
 				", birthdate: " + birthdate +
 				", sex: " + sex +
-				", grade level: " + gradeLevel;
+				", grade level: " + gradeLevel +
+				", address: " + address +
+				", phone number: " + phoneNumber;
 	}
 
 }

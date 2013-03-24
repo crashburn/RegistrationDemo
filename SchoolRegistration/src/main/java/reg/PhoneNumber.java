@@ -45,5 +45,9 @@ public class PhoneNumber {
 	public void setSubscriberNumber(String subscriberNumber) {
 		this.subscriberNumber = subscriberNumber;
 	}
+	
+	public String toString() {
+		return areaCode + "-" + exchange + "-" + subscriberNumber;
+	}
 
 }

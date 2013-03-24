@@ -15,7 +15,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <title>Students</title>
 </head>
 <body>
-	<form method="POST" action="newstudent.html">
+	<form method="POST" action="/students.html">
 		First Name: <input type="text" name="firstName" /> 
 		Last Name: <input type="text" name="lastName" /> <br/>
 		Sex: <select name="sex"> 
