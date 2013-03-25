@@ -123,7 +123,7 @@ public class RegistrationController {
 	   // Persist the new student
 	   studentDao.persist(student);
 	   
-	   return "redirect:/students/" + student.getId() + "/detail.html";
+	   return "redirect:/students/" + student.getId() + "/school.html";
    }
 
    @RequestMapping(value = "/students/new", method = RequestMethod.GET)
@@ -144,11 +144,26 @@ public class RegistrationController {
 	   return "student.jsp";
    }
 
-   @RequestMapping(value = "/students/{studentId}/detail", method = RequestMethod.POST, params="verb=register")
+   @RequestMapping(value = "/students/{studentId}/school", method = RequestMethod.GET)
+   public String register(@PathVariable long studentId, Model model) {
+
+	   Student student = studentDao.retrieve(studentId);
+	   model.addAttribute("studentId", student.getId());
+	   
+	   School currentSchool = student.getSchool();
+	   model.addAttribute("currentSchoolId", (currentSchool != null) ? currentSchool.getId() : Long.MIN_VALUE);
+
+	   List<School> schools = schoolDao.getAllSchoolsByZipAndGradeLevel(student.getAddress().getZip(), student.getGradeLevel());
+	   model.addAttribute("schools", schools);
+
+	   return "registration.jsp";
+   }
+
+   @RequestMapping(value = "/students/{studentId}/school", method = RequestMethod.POST, params="verb=register")
    public String register(@PathVariable long studentId, @RequestParam long schoolId) {
 
 	   studentDao.register(studentId, schoolId);
-	   return "redirect:/students.html";
+	   return "redirect:/students/" + studentId + "/detail.html";
    }
 
    @RequestMapping(value = "/deletestudent")

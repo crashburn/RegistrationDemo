@@ -37,18 +37,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
    	School: <%=((school!=null) ? school.getName() : "Not registered") %>
 	
 	<hr/>
-	<h2>Matching Schools by Zip and Grade Level</h2>
-	<form method="POST" action="/students/<%=student.getId() %>/detail.html">
-		<input type="hidden" name="verb" value="register" />
-		<%
-   		for (School choice : schools) {
-		%>
-			<input type="radio" name="schoolId" value="<%=choice.getId()%>" /><%=choice.getName()%>
-		<%
-   		}
-		%>
-		<input type="submit" value="Register" />
-	</form>
+	<div><a class="button" href="/students/<%=student.getId() %>/school.html">Register for School</a></div>
 <% } %>
 
 </body>
