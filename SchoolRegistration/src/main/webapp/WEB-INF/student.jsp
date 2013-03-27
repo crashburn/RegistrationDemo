@@ -12,33 +12,33 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Student Details</title>
+	<title>Student Details</title>
+	<link rel="stylesheet" type="text/css" href="/styles/theme.css">
 </head>
 <body>
-<a href="/students.html">Back to Students List</a>
-<hr/>
-<h1>Student Profile</h1>
-<% if(student != null) { %>
-	First Name: <%=student.getFirstName()%><br/>
-	Last Name: <%=student.getLastName()%><br/>
-	Sex: <%=student.getSex()%><br/>
-	Birth Date: <%=student.getFormattedBirthdate("MM/dd/yyyy")%><br/>
-
-	Street: <%=student.getAddress().getStreet()%><br/>
-	City: <%=student.getAddress().getCity()%><br/>
-	State: <%=student.getAddress().getState()%><br/>
-	Zip: <%=student.getAddress().getZip()%><br/>
-
-	Phone Number: (<%=student.getPhoneNumber().getAreaCode()%>) 
-				<%=student.getPhoneNumber().getExchange()%>-<%=student.getPhoneNumber().getSubscriberNumber()%><br/>
-
-	Grade Level: <%=student.getGradeLevel().getDisplayValue()%><br/>
-	<% School school = student.getSchool(); %>
-   	School: <%=((school!=null) ? school.getName() : "Not registered") %>
-	
+	<a class="button" href="/students.html">Back to Students List</a>
 	<hr/>
-	<div><a class="button" href="/students/<%=student.getId() %>/school.html">Register for School</a></div>
-<% } %>
-
+	<h1>Student Profile</h1>
+	<% if(student != null) { %>
+		First Name: <%=student.getFirstName()%><br/>
+		Last Name: <%=student.getLastName()%><br/>
+		Sex: <%=student.getSex()%><br/>
+		Birth Date: <%=student.getFormattedBirthdate("MM/dd/yyyy")%><br/>
+	
+		Street: <%=student.getAddress().getStreet()%><br/>
+		City: <%=student.getAddress().getCity()%><br/>
+		State: <%=student.getAddress().getState()%><br/>
+		Zip: <%=student.getAddress().getZip()%><br/>
+	
+		Phone Number: (<%=student.getPhoneNumber().getAreaCode()%>) 
+					<%=student.getPhoneNumber().getExchange()%>-<%=student.getPhoneNumber().getSubscriberNumber()%><br/>
+	
+		Grade Level: <%=student.getGradeLevel().getDisplayValue()%><br/>
+		<% School school = student.getSchool(); %>
+	   	School: <%=((school!=null) ? school.getName() : "Not registered") %>
+		
+		<hr/>
+		<div><a class="button" href="/students/<%=student.getId() %>/school.html">Register for School</a></div>
+	<% } %>
 </body>
 </html>

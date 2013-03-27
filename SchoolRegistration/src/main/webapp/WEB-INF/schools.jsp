@@ -12,34 +12,37 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Schools</title>
+	<title>Schools</title>
+	<link rel="stylesheet" type="text/css" href="/styles/theme.css">
 </head>
 <body>
-<h1>Schools</h1>
-<table>
-<tr id="headerRow">
-<th id="name">Name</th>
-<th id="city">City</th>
-<th id="state">State</th>
-<th id="zip">Zip</th>
-</tr>
-<% for (School school : schools) { %>
-	<tr>
-	<td><a href="/schools/<%=school.getId()%>/detail.html"><%=school.getName()%></a></td>
-	<td><%=school.getCity()%></td>
-	<td><%=school.getState()%></td>
-	<td><%=school.getZip()%></td>
-	</tr>
-<% } %>
-</table>
-<div id="pagination" data-current-page="<%=tableState.getPageIndex() %>" 
-					 data-max-page="<%=tableState.getMaxPageIndex() %>" 
-					 data-current-sort="<%=tableState.getSortBy()%>">
-	<span id="prevPage">&lt;</span>
-	<span>Page <%=tableState.getPageNumber() %> of <%=tableState.getMaxPageNumber() %></span>
-	<span id="nextPage">&gt;</span>
-</div>
-<div><span class="button"><a href="/schools/new.html">Add a School</a></span></div>
-<script type="text/javascript" src="/scripts/table.js"></script>
+	<h1>Schools</h1>
+	<div class="tablewrapper">
+		<table>
+		<tr id="headerRow">
+		<th id="name">Name</th>
+		<th id="city">City</th>
+		<th id="state">State</th>
+		<th id="zip">Zip</th>
+		</tr>
+		<% for (School school : schools) { %>
+			<tr>
+			<td><a href="/schools/<%=school.getId()%>/detail.html"><%=school.getName()%></a></td>
+			<td><%=school.getCity()%></td>
+			<td><%=school.getState()%></td>
+			<td><%=school.getZip()%></td>
+			</tr>
+		<% } %>
+		</table>
+		<div id="pagination" data-current-page="<%=tableState.getPageIndex() %>" 
+							 data-max-page="<%=tableState.getMaxPageIndex() %>" 
+							 data-current-sort="<%=tableState.getSortBy()%>">
+			<span id="prevPage" class="button">&lt;</span>
+			<span>Page <%=tableState.getPageNumber() %> of <%=tableState.getMaxPageNumber() %></span>
+			<span id="nextPage" class="button">&gt;</span>
+		</div>
+	</div>
+	<div><a class="button" href="/schools/new.html">Add a School</a></div>
+	<script type="text/javascript" src="/scripts/table.js"></script>
 </body>
 </html>

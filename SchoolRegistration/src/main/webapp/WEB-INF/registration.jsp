@@ -13,11 +13,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Register for a School</title>
+	<title>Register for a School</title>
+	<link rel="stylesheet" type="text/css" href="/styles/theme.css">
 </head>
 <body>
-<a href="/students/<%=studentId%>/detail.html">Back to Student Profile</a>
-<hr/>
+	<a class="button" href="/students/<%=studentId%>/detail.html">Back to Student Profile</a>
+	<hr/>
 	<h1>Matching Schools by Zip and Grade Level</h1>
 	<form method="POST" action="/students/<%=studentId%>/school.html">
 		<input type="hidden" name="verb" value="register" />

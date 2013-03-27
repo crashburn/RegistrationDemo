@@ -1,0 +1,103 @@
+@charset "ISO-8859-1";
+
+body
+{
+	font-family: Helvetica,"Trebuchet MS", Arial, sans-serif;
+}
+
+.button 
+{ 
+	background-color: #ffcc00;
+	border: 1px solid black;
+	padding: 3px 10px 3px 10px;
+	margin: 5px;
+	display: inline-block;
+	text-decoration: none;
+}
+
+div.tablewrapper
+{
+	border: 1px solid black;
+	display: inline-block;
+}
+
+div#pagination
+{
+	background-color: #cccccc;
+	text-align: center;
+}
+
+div#pagination .button
+{
+	background-color: rgb(70,115,150);
+	color: #ffffff;
+}
+
+table
+{
+	border-collapse:collapse;
+}
+
+tr
+{
+	color:#000000;
+	background-color: rgb(240,240,255);
+}
+
+td, th 
+{
+	font-size:1em;
+	border:1px solid #aaaaaa;
+	padding:3px 7px 2px 7px;
+}
+
+th 
+{
+	font-size:1.1em;
+	text-align:left;
+	padding-top:5px;
+	padding-bottom:4px;
+	background-color: rgb(70,115,150);
+	color:#ffffff;
+}
+
+th#name
+{
+	width: 200px;
+}
+th#city
+{
+	width: 150px;
+}
+th#state
+{
+	width: 50px;
+}
+th#zip
+{
+	width: 50px;
+}
+th#lastName
+{
+	width: 150px;
+}
+th#firstName
+{
+	width: 150px;
+}
+th#sex
+{
+	width: 75px;
+}
+th#age
+{
+	width: 50px;
+}
+th#school
+{
+	width: 200px;
+}
+th#gradelevel
+{
+	width: 100px;
+}

@@ -10,9 +10,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Add a Student</title>
+	<title>Add a Student</title>
+	<link rel="stylesheet" type="text/css" href="/styles/theme.css">
 </head>
 <body>
+	<h1>Add a Student</h1>
 	<form id="studentForm" method="POST" action="/students.html">
 		First Name: <input type="text" name="firstName" /> 
 		Last Name: <input type="text" name="lastName" /> <br/>
@@ -37,21 +39,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 		<input type="text" name="exchange" /> 
 		<input type="text" name="subscriberNumber" /> <br/> 
 	</form>
-<hr>
-<div id="buttons">
-	<span id="btnAdd" class="button">Add</span>
-	<span id="btnCancel" class="button">Cancel</span>
-</div>
-<script>
-function listenForButtonClicks() {
-	var btnAdd = document.getElementById("btnAdd");
-	var studentForm = document.getElementById("studentForm");
-	btnAdd.addEventListener("click", function() { studentForm.submit(); }, false);
-	var btnCancel = document.getElementById("btnCancel");
-	btnCancel.addEventListener("click", function() { window.location = "/students.html"; }, false);
-}
-
-listenForButtonClicks();
-</script>
+	<hr>
+	<div id="buttons">
+		<span id="btnAdd" class="button">Add</span>
+		<span id="btnCancel" class="button">Cancel</span>
+	</div>
+	<script>
+		function listenForButtonClicks() {
+			var btnAdd = document.getElementById("btnAdd");
+			var studentForm = document.getElementById("studentForm");
+			btnAdd.addEventListener("click", function() { studentForm.submit(); }, false);
+			var btnCancel = document.getElementById("btnCancel");
+			btnCancel.addEventListener("click", function() { window.location = "/students.html"; }, false);
+		}
+		listenForButtonClicks();
+	</script>
 </body>
 </html>
