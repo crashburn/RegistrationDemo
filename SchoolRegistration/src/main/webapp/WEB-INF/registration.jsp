@@ -6,10 +6,7 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="reg.*"%>
-<jsp:useBean id="studentId" type="java.lang.Long" scope="request" />
-<jsp:useBean id="currentSchoolId" type="java.lang.Long" scope="request" />
-<jsp:useBean id="schools" type="java.util.List<School>" scope="request" />
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,19 +14,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 	<link rel="stylesheet" type="text/css" href="/styles/theme.css">
 </head>
 <body>
-	<a class="button" href="/students/<%=studentId%>/detail.html">Back to Student Profile</a>
+	<a class="button" href="/students/${studentId}/detail.html">Back to Student Profile</a>
 	<hr/>
 	<h1>Matching Schools by Zip and Grade Level</h1>
-	<form method="POST" action="/students/<%=studentId%>/school.html">
+	<form method="POST" action="/students/${studentId}/school.html">
 		<input type="hidden" name="verb" value="register" />
-		<%
-   		for (School choice : schools) {
-		%>
-			<input type="radio" name="schoolId" value="<%=choice.getId()%>" 
-				<% if(currentSchoolId.longValue() == choice.getId()) out.write("checked"); %> /><%=choice.getName()%>
-		<%
-   		}
-		%>
+		<c:forEach var="choice" items="${schools}">
+			<input type="radio" name="schoolId" value="${choice.id}" 
+				<c:if test="${currentSchoolId == choice.id}" >checked</c:if> />${choice.name}
+		</c:forEach>
 		<input type="submit" value="Register" />
 	</form>
 </body>

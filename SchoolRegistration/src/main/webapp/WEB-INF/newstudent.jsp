@@ -6,7 +6,8 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="reg.*"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,30 +16,32 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 </head>
 <body>
 	<h1>Add a Student</h1>
-	<form id="studentForm" method="POST" action="/students.html">
-		First Name: <input type="text" name="firstName" /> 
-		Last Name: <input type="text" name="lastName" /> <br/>
-		Sex: <select name="sex"> 
-			<% for(Sex s : Sex.values()) { %>
-			<option value="<%=s.name() %>"><%=s %></option>
-			<% } %>
-		</select>
-		Grade Level: <select name="gradeLevel"> 
-			<% for(GradeLevel gl : GradeLevel.values()) { %>
-			<option value="<%=gl.name() %>"><%=gl.getDisplayValue() %></option>
-			<% } %>
-		</select> 
-		Birth Date: (MM)<input type="text" name="birthMonth" /> 
-		(DD)<input type="text" name="birthDay" /> 
-		(YYYY)<input type="text" name="birthYear" /> <br/> 
-		Street: <input type="text" name="street" />
-		City: <input type="text" name="city" /> 
-		State: <input type="text" name="state" /> 
-		Zip: <input type="text" name="zip" /> <br/> 
-		Phone Number: <input type="text" name="areaCode" /> 
-		<input type="text" name="exchange" /> 
-		<input type="text" name="subscriberNumber" /> <br/> 
-	</form>
+	<form:form id="studentForm" method="POST" action="/students.html" modelAttribute="student">
+		<div>
+			First Name: <form:input path="firstName" /> 
+			Last Name: <form:input path="lastName" />
+		</div>
+		<div>
+			Sex: <form:select path="sex"> 
+				<form:options />
+			</form:select>
+			Grade Level: <form:select path="gradeLevel"> 
+				<form:options itemLabel="displayValue"/>
+			</form:select> 
+			Birth Date: (MM/dd/yyyy)<form:input path="birthdate" /> 
+		</div>
+		<div>
+			Street: <form:input path="address.street" />
+			City: <form:input path="address.city" /> 
+			State: <form:input path="address.state" /> 
+			Zip: <form:input path="address.zip" /> 
+		</div>
+		<div>
+			Phone Number: <form:input path="phoneNumber.areaCode" /> 
+			<form:input path="phoneNumber.exchange" /> 
+			<form:input path="phoneNumber.subscriberNumber" />
+		</div> 
+	</form:form>
 	<hr>
 	<div id="buttons">
 		<span id="btnAdd" class="button">Add</span>

@@ -6,9 +6,7 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="reg.*"%>
-<jsp:useBean id="students" type="java.util.List<Student>" scope="request" />
-<jsp:useBean id="tableState" type="reg.TableState" scope="request" />
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,21 +24,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 		<th id="school">School Name</th>
 		<th id="gradeLevel">Grade Level</th>
 		</tr>
-		<% for (Student student : students) { %>
+		<c:forEach var="student" items="${students}">
 			<tr>
-			<td><a href="/students/<%=student.getId()%>/detail.html"><%=student.getLastName()%></a></td>
-			<td><%=student.getFirstName()%></td>
-			<td><%=student.getSex()%></td>
-			<td><%=((student.getSchool() != null) ? student.getSchool().getName() : "Not registered") %></td>
-			<td><%=student.getGradeLevel().getDisplayValue()%></td>
+			<td><a href="/students/${student.id}/detail.html">${student.lastName}</a></td>
+			<td>${student.firstName}</td>
+			<td>${student.sex}</td>
+			<td>${(student.school != null) ? student.school.name : "Not registered"}</td>
+			<td>${student.gradeLevel.displayValue}</td>
 			</tr>
-		<% } %>
+		</c:forEach>
 		</table>
-		<div id="pagination" data-current-page="<%=tableState.getPageIndex() %>" 
-							 data-max-page="<%=tableState.getMaxPageIndex() %>" 
-							 data-current-sort="<%=tableState.getSortBy()%>">
+		<div id="pagination" data-current-page="${tableState.pageIndex}" 
+							 data-max-page="${tableState.maxPageIndex}" 
+							 data-current-sort="${tableState.sortBy}">
 			<span id="prevPage" class="button">&lt;</span>
-			<span>Page <%=tableState.getPageNumber() %> of <%=tableState.getMaxPageNumber() %></span>
+			<span>Page ${tableState.pageNumber} of ${tableState.maxPageNumber}</span>
 			<span id="nextPage" class="button">&gt;</span>
 		</div>
 	</div>

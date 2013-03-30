@@ -10,6 +10,8 @@ package reg;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -102,17 +104,20 @@ public class Student {
 		this.sex = sex;
 	}
 
-	public Calendar getBirthdate() {
-		return birthdate;
+	public Date getBirthdate() {
+		return (birthdate != null) ? birthdate.getTime() : null;
 	}
 
-	public String getFormattedBirthdate(String pattern) {
-		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+	public String getFormattedBirthdate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		return sdf.format(birthdate.getTime());
 	}
 
-	public void setBirthdate(Calendar birthdate) {
-		this.birthdate = birthdate;
+	public void setBirthdate(Date birthdate) {
+		if(this.birthdate == null) {
+			this.birthdate = new GregorianCalendar();
+		}
+		this.birthdate.setTime(birthdate);
 	}
 
 	public GradeLevel getGradeLevel() {

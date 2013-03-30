@@ -8,6 +8,8 @@
  */
 package reg;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
@@ -15,8 +17,11 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +40,14 @@ public class RegistrationController {
    private StudentDao studentDao;
    
    Logger logger = Logger.getLogger(RegistrationController.class.getName());
-
+   
+   @InitBinder
+   protected void initBinder(WebDataBinder binder) {
+       SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+       binder.registerCustomEditor(Date.class, new CustomDateEditor(
+               dateFormat, false));
+   }
+   
    @RequestMapping(value = "/schools", method = RequestMethod.GET)
    public String getSchools(@ModelAttribute TableState tableState, Model model) {
 	   
@@ -109,18 +121,8 @@ public class RegistrationController {
    }
    
    @RequestMapping(value = "/students", method = RequestMethod.POST)
-   public String addStudent(@ModelAttribute Student student, 
-		   					@ModelAttribute Address address, 
-		   					@ModelAttribute PhoneNumber phoneNumber,
-		   					@RequestParam int birthMonth,
-		   					@RequestParam int birthDay,
-		   					@RequestParam int birthYear) {
+   public String addStudent(@ModelAttribute Student student) {
 
-	   // Combine the model objects
-	   student.setAddress(address);
-	   student.setPhoneNumber(phoneNumber);
-	   student.setBirthdate(new GregorianCalendar(birthYear, birthMonth-1, birthDay));
-	   
 	   // Persist the new student
 	   studentDao.persist(student);
 	   
@@ -128,7 +130,8 @@ public class RegistrationController {
    }
 
    @RequestMapping(value = "/students/new", method = RequestMethod.GET)
-   public String initNewStudent() {
+   public String initNewStudent(Model model) {
+	   model.addAttribute(new Student());
 	   return "newstudent.jsp";
    }
    

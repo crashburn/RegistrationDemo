@@ -6,9 +6,7 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="reg.*"%>
-<jsp:useBean id="student" type="reg.Student" scope="request" />
-<jsp:useBean id="schools" type="java.util.List<School>" scope="request" />
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,26 +17,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 	<a class="button" href="/students.html">Back to Students List</a>
 	<hr/>
 	<h1>Student Profile</h1>
-	<% if(student != null) { %>
-		First Name: <%=student.getFirstName()%><br/>
-		Last Name: <%=student.getLastName()%><br/>
-		Sex: <%=student.getSex()%><br/>
-		Birth Date: <%=student.getFormattedBirthdate("MM/dd/yyyy")%><br/>
+		First Name: ${student.firstName}<br/>
+		Last Name: ${student.lastName}<br/>
+		Sex: ${student.sex}<br/>
+		Birth Date: ${student.formattedBirthdate}<br/>
 	
-		Street: <%=student.getAddress().getStreet()%><br/>
-		City: <%=student.getAddress().getCity()%><br/>
-		State: <%=student.getAddress().getState()%><br/>
-		Zip: <%=student.getAddress().getZip()%><br/>
+		Street: ${student.address.street}<br/>
+		City: ${student.address.city}<br/>
+		State: ${student.address.state}<br/>
+		Zip: ${student.address.zip}<br/>
 	
-		Phone Number: (<%=student.getPhoneNumber().getAreaCode()%>) 
-					<%=student.getPhoneNumber().getExchange()%>-<%=student.getPhoneNumber().getSubscriberNumber()%><br/>
+		Phone Number: (${student.phoneNumber.areaCode}) 
+					${student.phoneNumber.exchange}-${student.phoneNumber.subscriberNumber}<br/>
 	
-		Grade Level: <%=student.getGradeLevel().getDisplayValue()%><br/>
-		<% School school = student.getSchool(); %>
-	   	School: <%=((school!=null) ? school.getName() : "Not registered") %>
+		Grade Level: ${student.gradeLevel.displayValue}<br/>
+	   	School: ${ student.school!=null ? student.school.name : "Not registered" }
 		
 		<hr/>
-		<div><a class="button" href="/students/<%=student.getId() %>/school.html">Register for School</a></div>
-	<% } %>
+		<div><a class="button" href="/students/${student.id}/school.html">Register for School</a></div>
 </body>
 </html>
