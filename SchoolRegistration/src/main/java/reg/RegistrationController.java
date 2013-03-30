@@ -59,7 +59,8 @@ public class RegistrationController {
    }
 
    @RequestMapping(value = "/schools/new", method = RequestMethod.GET)
-   public String initNewSchool() {
+   public String initNewSchool(Model model) {
+	   model.addAttribute(new School());
 	   return "newschool.jsp";
    }
     

@@ -6,9 +6,7 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="reg.*"%>
-<jsp:useBean id="schools" type="java.util.List<School>" scope="request" />
-<jsp:useBean id="tableState" type="reg.TableState" scope="request" />
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,20 +23,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 		<th id="state">State</th>
 		<th id="zip">Zip</th>
 		</tr>
-		<% for (School school : schools) { %>
+		<c:forEach var="school" items="${schools}">
 			<tr>
-			<td><a href="/schools/<%=school.getId()%>/detail.html"><%=school.getName()%></a></td>
-			<td><%=school.getCity()%></td>
-			<td><%=school.getState()%></td>
-			<td><%=school.getZip()%></td>
+			<td><a href="/schools/${school.id}/detail.html">${school.name}</a></td>
+			<td>${school.city}</td>
+			<td>${school.state}</td>
+			<td>${school.zip}</td>
 			</tr>
-		<% } %>
+		</c:forEach>
 		</table>
-		<div id="pagination" data-current-page="<%=tableState.getPageIndex() %>" 
-							 data-max-page="<%=tableState.getMaxPageIndex() %>" 
-							 data-current-sort="<%=tableState.getSortBy()%>">
+		<div id="pagination" data-current-page="${tableState.pageIndex}" 
+							 data-max-page="${tableState.maxPageIndex}" 
+							 data-current-sort="${tableState.sortBy}">
 			<span id="prevPage" class="button">&lt;</span>
-			<span>Page <%=tableState.getPageNumber() %> of <%=tableState.getMaxPageNumber() %></span>
+			<span>Page ${tableState.pageNumber} of ${tableState.maxPageNumber}</span>
 			<span id="nextPage" class="button">&gt;</span>
 		</div>
 	</div>

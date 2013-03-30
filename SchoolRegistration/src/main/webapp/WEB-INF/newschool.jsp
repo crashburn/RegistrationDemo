@@ -6,7 +6,8 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="reg.*"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,23 +16,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 </head>
 <body>
 	<h1>Add a School</h1>
-	<form id="schoolForm" method="POST" action="/schools.html">
-		Name: <input type="text" name="name" /> <br/>
-		Street: <input type="text" name="street" />
-		City: <input type="text" name="city" /> 
-		State: <input type="text" name="state" /> 
-		Zip: <input type="text" name="zip" /> <br/> 
-		Min Grade Level: <select name="minGradeLevel">
-			<% for(GradeLevel gl : GradeLevel.values()) { %>
-			<option value="<%=gl.name() %>"><%=gl.getDisplayValue() %></option>
-			<% } %>
-		</select>
-		Max Grade Level: <select name="maxGradeLevel">
-			<% for(GradeLevel gl : GradeLevel.values()) { %>
-			<option value="<%=gl.name() %>"><%=gl.getDisplayValue() %></option>
-			<% } %>
-		</select>
-	</form>
+	<form:form id="schoolForm" method="POST" action="/schools.html" modelAttribute="school">
+		Name: <form:input path="name" /> <br/>
+		Street: <form:input path="street" />
+		City: <form:input path="city" /> 
+		State: <form:input path="state" /> 
+		Zip: <form:input path="zip" /> <br/> 
+		Min Grade Level: <form:select path="minGradeLevel" >
+			<form:options itemLabel="displayValue"/>
+		</form:select>
+		Max Grade Level: <form:select path="maxGradeLevel" >
+			<form:options itemLabel="displayValue"/>
+		</form:select>
+	</form:form>
 	<hr>
 	<div id="buttons">
 		<span id="btnAdd" class="button">Add</span>
