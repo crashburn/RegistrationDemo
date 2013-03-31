@@ -5,6 +5,11 @@ body
 	font-family: Helvetica,"Trebuchet MS", Arial, sans-serif;
 }
 
+.error 
+{
+	color: red;
+}
+
 .button 
 { 
 	background-color: #ffcc00;
@@ -63,11 +68,11 @@ th
 
 th#name
 {
-	width: 200px;
+	width: 250px;
 }
 th#city
 {
-	width: 150px;
+	width: 200px;
 }
 th#state
 {

@@ -18,8 +18,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 	<h1>Add a Student</h1>
 	<form:form id="studentForm" method="POST" action="/students.html" modelAttribute="student">
 		<div>
-			First Name: <form:input path="firstName" /> 
-			Last Name: <form:input path="lastName" />
+			First Name: <form:input path="firstName" size="20" maxlength="20" /> <form:errors path="firstName" cssClass="error" />
+			Last Name: <form:input path="lastName" size="20" maxlength="20" /> <form:errors path="lastName" cssClass="error" />
 		</div>
 		<div>
 			Sex: <form:select path="sex"> 
@@ -28,18 +28,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 			Grade Level: <form:select path="gradeLevel"> 
 				<form:options itemLabel="displayValue"/>
 			</form:select> 
-			Birth Date: (MM/dd/yyyy)<form:input path="birthdate" /> 
 		</div>
 		<div>
-			Street: <form:input path="address.street" />
-			City: <form:input path="address.city" /> 
-			State: <form:input path="address.state" /> 
-			Zip: <form:input path="address.zip" /> 
+			Birth Date: (MM/dd/yyyy)<form:input path="birthdate" /> <form:errors path="birthdate" cssClass="error" />
 		</div>
 		<div>
-			Phone Number: <form:input path="phoneNumber.areaCode" /> 
-			<form:input path="phoneNumber.exchange" /> 
-			<form:input path="phoneNumber.subscriberNumber" />
+			Street: <form:input path="address.street" size="50" maxlength="50" /> <form:errors path="address.street" cssClass="error" />
+		</div>
+		<div>
+			City: <form:input path="address.city" size="20" maxlength="20" /> <form:errors path="address.city" cssClass="error" />
+			State: <form:input path="address.state" size="2" maxlength="2" /> <form:errors path="address.state" cssClass="error" />
+			Zip: <form:input path="address.zip" size="5" maxlength="5" /> <form:errors path="address.zip" cssClass="error" />
+		</div>
+		<div>
+			Phone Number: 
+			(<form:input path="phoneNumber.areaCode" size="3" maxlength="3" />) <form:errors path="phoneNumber.areaCode" cssClass="error" />
+			<form:input path="phoneNumber.exchange" size="3" maxlength="3" /> <form:errors path="phoneNumber.exchange" cssClass="error" />-
+			<form:input path="phoneNumber.subscriberNumber" size="4" maxlength="4" /> <form:errors path="phoneNumber.subscriberNumber" cssClass="error" />
 		</div> 
 	</form:form>
 	<hr>

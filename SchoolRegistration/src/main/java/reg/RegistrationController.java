@@ -10,16 +10,18 @@ package reg;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,6 +46,7 @@ public class RegistrationController {
    @InitBinder
    protected void initBinder(WebDataBinder binder) {
        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+       dateFormat.setLenient(false);
        binder.registerCustomEditor(Date.class, new CustomDateEditor(
                dateFormat, false));
    }
@@ -63,11 +66,15 @@ public class RegistrationController {
    }
 
    @RequestMapping(value = "/schools", method = RequestMethod.POST)
-   public String addSchool(@ModelAttribute School school) {
+   public String addSchool(@Valid School school, BindingResult result) {
 
-	   // Persist the new school
-	   schoolDao.persist(school);
-	   return "redirect:/schools.html";
+	   String view = "newschool.jsp";
+	   if(!result.hasErrors()) {
+		   // Persist the new school
+		   schoolDao.persist(school);
+		   view = "redirect:/schools.html";
+	   }
+	   return view;
    }
 
    @RequestMapping(value = "/schools/new", method = RequestMethod.GET)
@@ -121,12 +128,16 @@ public class RegistrationController {
    }
    
    @RequestMapping(value = "/students", method = RequestMethod.POST)
-   public String addStudent(@ModelAttribute Student student) {
+   public String addStudent(@Valid Student student, BindingResult result) {
 
-	   // Persist the new student
-	   studentDao.persist(student);
+	   String view = "newstudent.jsp";
+	   if(!result.hasErrors()) {
+		   // Persist the new student
+		   studentDao.persist(student);
+		   view = "redirect:/students/" + student.getId() + "/school.html";
+	   }
 	   
-	   return "redirect:/students/" + student.getId() + "/school.html";
+	   return view;
    }
 
    @RequestMapping(value = "/students/new", method = RequestMethod.GET)

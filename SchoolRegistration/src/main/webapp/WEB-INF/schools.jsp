@@ -26,9 +26,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 		<c:forEach var="school" items="${schools}">
 			<tr>
 			<td><a href="/schools/${school.id}/detail.html">${school.name}</a></td>
-			<td>${school.city}</td>
-			<td>${school.state}</td>
-			<td>${school.zip}</td>
+			<td>${school.address.city}</td>
+			<td>${school.address.state}</td>
+			<td>${school.address.zip}</td>
 			</tr>
 		</c:forEach>
 		</table>

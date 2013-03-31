@@ -9,12 +9,26 @@
 package reg;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Embeddable
 public class Address {
+	
+	@NotBlank
+    @Size(max=50)
 	private String street;
+	
+	@NotBlank
+    @Size(max=20)
 	private String city;
+	
+	@Pattern(regexp="[A-Z]{2}", message="must be exactly two uppercase characters")
 	private String state;
+
+    @Pattern(regexp="[0-9]{5}", message="must be exactly 5 digits")
 	private String zip;
 	
 	public Address() {

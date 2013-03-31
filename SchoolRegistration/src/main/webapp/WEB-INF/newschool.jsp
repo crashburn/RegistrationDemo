@@ -17,17 +17,39 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <body>
 	<h1>Add a School</h1>
 	<form:form id="schoolForm" method="POST" action="/schools.html" modelAttribute="school">
-		Name: <form:input path="name" /> <br/>
-		Street: <form:input path="street" />
-		City: <form:input path="city" /> 
-		State: <form:input path="state" /> 
-		Zip: <form:input path="zip" /> <br/> 
-		Min Grade Level: <form:select path="minGradeLevel" >
-			<form:options itemLabel="displayValue"/>
-		</form:select>
-		Max Grade Level: <form:select path="maxGradeLevel" >
-			<form:options itemLabel="displayValue"/>
-		</form:select>
+		<div>
+			Name: 
+			<form:input path="name" size="30" maxlength="30" />
+			<form:errors path="name" cssClass="error" />
+		</div>
+		<div>
+			Street: 
+			<form:input path="address.street" size="50" maxlength="50" />
+			<form:errors path="address.street" cssClass="error" />
+		</div>
+		<div>
+			City: 
+			<form:input path="address.city" size="20" maxlength="20" /> 
+			<form:errors path="address.city" cssClass="error" />
+		</div>
+		<div>
+			State: 
+			<form:input path="address.state" size="2" maxlength="2" /> 
+			<form:errors path="address.state" cssClass="error" />
+		</div>
+		<div>
+			Zip: 
+			<form:input path="address.zip" size="5" maxlength="5" />
+			<form:errors path="address.zip" cssClass="error" />
+		</div>
+		<div>
+			Min Grade Level: <form:select path="minGradeLevel" >
+				<form:options itemLabel="displayValue"/>
+			</form:select>
+			Max Grade Level: <form:select path="maxGradeLevel" >
+				<form:options itemLabel="displayValue"/>
+			</form:select>
+		</div>
 	</form:form>
 	<hr>
 	<div id="buttons">

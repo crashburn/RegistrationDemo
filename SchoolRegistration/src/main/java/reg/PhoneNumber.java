@@ -9,12 +9,18 @@
 package reg;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Pattern;
 
 @Embeddable
 public class PhoneNumber {
 	
+    @Pattern(regexp="[0-9]{3}", message="must be exactly 3 digits")
 	private String areaCode;
-	private String exchange;
+
+    @Pattern(regexp="[0-9]{3}", message="must be exactly 3 digits")
+    private String exchange;
+    
+    @Pattern(regexp="[0-9]{4}", message="must be exactly 4 digits")
 	private String subscriberNumber;
 	
 	public PhoneNumber() {

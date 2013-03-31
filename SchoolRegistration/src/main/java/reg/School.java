@@ -14,6 +14,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @NamedQueries({
@@ -34,11 +40,19 @@ public class School {
 	@GeneratedValue
 	Long id;
 
+	@NotBlank
+    @Size(max=30)
 	private String name;
+	
+	@NotNull
 	private GradeLevel minGradeLevel;
+
+	@NotNull
 	private GradeLevel maxGradeLevel;
 
 	@Embedded
+	@NotNull
+	@Valid
 	private Address address;
 
 	// Constructors:
@@ -65,6 +79,14 @@ public class School {
 		this.name = name;
 	}
 
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
 	public GradeLevel getMinGradeLevel() {
 		return minGradeLevel;
 	}
@@ -80,47 +102,15 @@ public class School {
 	public void setMaxGradeLevel(GradeLevel aGradeLevel) {
 		maxGradeLevel = aGradeLevel;
 	}
-	
-	public String getStreet() {
-		return address.getStreet();
-	}
-
-	public void setStreet(String street) {
-		address.setStreet(street);
-	}
-
-	public String getCity() {
-		return address.getCity();
-	}
-
-	public void setCity(String city) {
-		address.setCity(city);
-	}
-
-	public String getState() {
-		return address.getState();
-	}
-
-	public void setState(String state) {
-		address.setState(state);
-	}
-
-	public String getZip() {
-		return address.getZip();
-	}
-
-	public void setZip(String zip) {
-		address.setZip(zip);
-	}
 
 	// String Representation:
 	@Override
 	public String toString() {
 		return  "name: " + getName() + 
-				", street: " + getStreet() + 
-				", city: " + getCity() + 
-				", state: " + getState() + 
-				", zip: " + getZip() + 
+				", street: " + getAddress().getStreet() + 
+				", city: " + getAddress().getCity() + 
+				", state: " + getAddress().getState() + 
+				", zip: " + getAddress().getZip() + 
 				", min: " + minGradeLevel + 
 				", max: " + maxGradeLevel;
 	}

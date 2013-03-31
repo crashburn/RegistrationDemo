@@ -48,4 +48,7 @@
       class="org.springframework.web.servlet.view.InternalResourceViewResolver">
       <property name="prefix" value="/WEB-INF/" />
    </bean>
+   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+      <property name="basename" value="message"/>
+   </bean>
 </beans>
