@@ -59,16 +59,13 @@ public class School {
 	public School() {
 		address = new Address();
 	}
-
-	public School(String name, GradeLevel aMinGradeLevel, GradeLevel aMaxGradeLevel, Address anAddress) {
-		this.name = name;
-		this.minGradeLevel = aMinGradeLevel;
-		this.maxGradeLevel = aMaxGradeLevel;
-		this.address = anAddress;
-	}
 	
 	public long getId() {
 		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {

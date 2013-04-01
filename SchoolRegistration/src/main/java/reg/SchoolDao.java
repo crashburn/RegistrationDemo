@@ -29,6 +29,11 @@ public class SchoolDao {
 	   public void persist(School school) {
 	      em.persist(school);
 	   }
+
+	   @Transactional
+	   public void update(School school) {
+	      em.merge(school);
+	   }
 	   
 	   public School retrieve(long id) {
 		   return em.find(School.class, id);

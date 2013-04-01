@@ -18,13 +18,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 	<br/>
 	<h1>School Details</h1>
 	${school} 
-	<form id="schoolForm" method="POST" action="/schools/${school.id}/detail.html">
-		<input type="hidden" id="verb" name="verb" value="" />
-		<div id="buttons">
-			<span id="btnEdit" class="button">Edit</span>
-			<span id="btnDelete" class="button">Delete</span>
-		</div>
-	</form>
+	<div id="buttons">
+		<a class="button" href="/schools/${school.id}/form.html">Edit</a>
+		<span id="btnDelete" class="button">Delete</span>
+	</div>
 	<hr/>
 	<h2>Students</h2>
 	<div class="tablewrapper">
@@ -54,6 +51,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 			<span id="nextPage" class="button">&gt;</span>
 		</div>
 	</div>
+	<form id="schoolForm" method="POST" action="/schools/${school.id}/detail.html">
+		<input type="hidden" id="verb" name="verb" value="" />
+	</form>
 	<script type="text/javascript" src="/scripts/table.js"></script>
 	<script>
 		function submitForm(verbValue) {
@@ -63,8 +63,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 			schoolForm.submit();
 		}
 		function listenForButtonClicks() {
-			var btnEdit = document.getElementById("btnEdit");
-			btnEdit.addEventListener("click", function() { submitForm("edit"); }, false);
 			var btnDelete = document.getElementById("btnDelete");
 			btnDelete.addEventListener("click", function() { submitForm("delete"); }, false);
 		}

@@ -80,6 +80,8 @@ public class RegistrationController {
    @RequestMapping(value = "/schools/new", method = RequestMethod.GET)
    public String initNewSchool(Model model) {
 	   model.addAttribute(new School());
+	   model.addAttribute("backURI", "/schools.html");
+	   model.addAttribute("submitURI", "/schools.html");
 	   return "newschool.jsp";
    }
     
@@ -108,9 +110,27 @@ public class RegistrationController {
 	   return "redirect:/schools.html";
    }
 
-   @RequestMapping(value = "/schools/{schoolId}/detail", method = RequestMethod.POST, params="verb=edit")
-   public String editSchool(@PathVariable long schoolId) {
-	   return "redirect:/schools/" + schoolId + "/detail.html";
+   @RequestMapping(value = "/schools/{schoolId}/form", method = RequestMethod.GET)
+   public String getSchoolForm(@PathVariable long schoolId, Model model) {
+	   // Populate the school
+	   School school = schoolDao.retrieve(schoolId);
+	   model.addAttribute(school);
+	   model.addAttribute("backURI", "/schools/" + schoolId + "/detail.html");
+	   model.addAttribute("submitURI", "/schools/" + schoolId + "/form.html");
+	   return "editschool.jsp";
+   }
+
+   @RequestMapping(value = "/schools/{schoolId}/form", method = RequestMethod.POST)
+   public String editSchool(@PathVariable long schoolId, @Valid School school, BindingResult result) {
+	   System.out.println("edit id[" + schoolId + "] " + school);
+	   String view = "editschool.jsp";
+	   school.setId(schoolId);
+	   if(!result.hasErrors()) {
+		   // Persist the new school
+		   schoolDao.update(school);
+		   view = "redirect:/schools/" + schoolId + "/detail.html";
+	   }
+	   return view;
    }
 
    @RequestMapping(value = "/students", method = RequestMethod.GET)

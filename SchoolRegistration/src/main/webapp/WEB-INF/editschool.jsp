@@ -11,15 +11,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Add a School</title>
+	<title>Edit a School</title>
 	<link rel="stylesheet" type="text/css" href="/styles/theme.css">
 </head>
 <body>
-	<h1>Add a School</h1>
+	<h1>Edit a School</h1>
 	<%@include file="schoolform.jsp"%>
 	<div id="buttons">
 		<span id="btnSave" class="button">Save</span>
-		<a class="button" href="/schools.html">Cancel</a>
+		<a class="button" href="/schools/${school.id}/detail.html">Cancel</a>
 	</div>
-	<script type="text/javascript" src="/scripts/form.js"></script></body>
+	<script type="text/javascript" src="/scripts/form.js"></script>
+</body>
 </html>
