@@ -4,4 +4,4 @@ I've included the project metadata (all of the .* directories and files) from th
 
 I've also attached a software license in case anyone finds something they want to reuse.  The license is there for the warranty/liability clause more than anything else; I'm not particularly concerned about someone stealing the intellectual property.
 
-The HTML and CSS have been validated against standards using tools on the W3C website.
+The HTML and CSS have been validated against standards using tools on the W3C website.  I've also tested with IE9 and Chrome twentysomething.
