@@ -4,5 +4,10 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN 
 AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
-
-<jsp:forward page="home.html" />
+	<header>
+		<h1>District Administrator</h1>
+	</header>
+	<nav>
+		<a class="navlink" href="/schools.html">Schools</a>
+		<a class="navlink" href="/students.html">Students</a>
+	</nav>

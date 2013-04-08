@@ -14,16 +14,27 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 	<link rel="stylesheet" type="text/css" href="/styles/theme.css">
 </head>
 <body>
-	<a class="button" href="/students/${studentId}/detail.html">Back to Student Profile</a>
-	<hr/>
-	<h1>Matching Schools by Zip and Grade Level</h1>
-	<form method="POST" action="/students/${studentId}/school.html">
-		<input type="hidden" name="verb" value="register" />
-		<c:forEach var="choice" items="${schools}">
-			<input type="radio" name="schoolId" value="${choice.id}" 
-				<c:if test="${currentSchoolId == choice.id}" >checked</c:if> />${choice.name}
-		</c:forEach>
-		<input type="submit" value="Register" />
-	</form>
+	<%@include file="header.jsp"%>
+	<section>
+		<a class="button" href="/students/${studentId}/detail.html">Back to Student Profile</a>
+		<hr/>
+		<h2>Matching Schools by Zip and Grade Level</h2>
+		<c:choose>
+			<c:when test="${not empty schools}">
+				<form method="POST" action="/students/${studentId}/school.html">
+					<input type="hidden" name="verb" value="register" />
+					<c:forEach var="choice" items="${schools}">
+						<input type="radio" name="schoolId" value="${choice.id}" 
+							<c:if test="${currentSchoolId == choice.id}" >checked</c:if> />${choice.name}
+						<br/>
+					</c:forEach>
+					<input class="button" type="submit" value="Register" />
+				</form>
+			</c:when>
+			<c:otherwise>
+				<p>No matching schools found</p>
+			</c:otherwise>
+		</c:choose>
+	</section>
 </body>
 </html>

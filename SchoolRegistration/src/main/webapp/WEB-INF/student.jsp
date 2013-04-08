@@ -14,9 +14,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 	<link rel="stylesheet" type="text/css" href="/styles/theme.css">
 </head>
 <body>
-	<a class="button" href="/students.html">Back to Students List</a>
-	<hr/>
-	<h1>Student Profile</h1>
+	<%@include file="header.jsp"%>
+	<section>
+		<a class="button" href="/students.html">Back to Students List</a>
+		<hr/>
+		<h2>Student Profile</h2>
 		First Name: ${student.firstName}<br/>
 		Last Name: ${student.lastName}<br/>
 		Sex: ${student.sex}<br/>
@@ -35,5 +37,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 		
 		<hr/>
 		<div><a class="button" href="/students/${student.id}/school.html">Register for School</a></div>
+	</section>
 </body>
 </html>

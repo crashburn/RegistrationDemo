@@ -15,12 +15,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 	<link rel="stylesheet" type="text/css" href="/styles/theme.css">
 </head>
 <body>
-	<h1>Edit a School</h1>
-	<%@include file="schoolform.jsp"%>
-	<div id="buttons">
-		<span id="btnSave" class="button">Save</span>
-		<a class="button" href="/schools/${school.id}/detail.html">Cancel</a>
-	</div>
+	<%@include file="header.jsp"%>
+	<section>
+		<h2>Edit a School</h2>
+		<%@include file="schoolform.jsp"%>
+		<div id="buttons">
+			<span id="btnSave" class="button">Save</span>
+			<a class="button" href="/schools/${school.id}/detail.html">Cancel</a>
+		</div>
+	</section>
 	<script type="text/javascript" src="/scripts/form.js"></script>
 </body>
 </html>

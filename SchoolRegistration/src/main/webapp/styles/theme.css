@@ -1,8 +1,43 @@
 @charset "ISO-8859-1";
 
+html, body, header, h1, nav 
+{
+	margin: 0;
+}
+
 body
 {
 	font-family: Helvetica,"Trebuchet MS", Arial, sans-serif;
+}
+
+header
+{
+	background-color: #000033;
+	color: #ffffff;
+}
+
+nav
+{
+	background-color: #cccccc;
+	padding: 5px 10px 5px 10px;
+}
+
+h1, section
+{
+	padding: 10px;
+}
+
+.navlink
+{
+	display: inline-block;
+	padding: 5px;
+	color: #000000;
+	text-decoration: none;
+	font-weight: bold;
+}
+.navlink:hover
+{
+	background-color: #999999;
 }
 
 .error 

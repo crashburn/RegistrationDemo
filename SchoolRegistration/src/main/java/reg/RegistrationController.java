@@ -51,6 +51,11 @@ public class RegistrationController {
                dateFormat, false));
    }
    
+   @RequestMapping(value = "/home", method = RequestMethod.GET)
+   public String goHome() {
+	   return "home.jsp";
+   }
+   
    @RequestMapping(value = "/schools", method = RequestMethod.GET)
    public String getSchools(@ModelAttribute TableState tableState, Model model) {
 	   
