@@ -81,6 +81,12 @@ public class RegistrationController {
 	   }
 	   return view;
    }
+   
+   @RequestMapping(value = "/schools/all", method = RequestMethod.GET, produces="application/json")
+   public List<School> exportSchools() {
+	   
+	   return schoolDao.getAllSchools();
+   }
 
    @RequestMapping(value = "/schools/new", method = RequestMethod.GET)
    public String initNewSchool(Model model) {
@@ -163,6 +169,12 @@ public class RegistrationController {
 	   }
 	   
 	   return view;
+   }
+   
+   @RequestMapping(value = "/students/all", method = RequestMethod.GET, produces="application/json")
+   public List<Student> exportStudents() {
+	   
+	   return studentDao.getAllStudents();
    }
 
    @RequestMapping(value = "/students/new", method = RequestMethod.GET)
