@@ -61,10 +61,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. --%>
 	<script type="text/javascript" src="/scripts/table.js"></script>
 	<script>
 		function submitForm(verbValue) {
-			var schoolForm = document.getElementById("schoolForm");
-			var verbElement = document.getElementById("verb");
-			verbElement.setAttribute("value", verbValue); 
-			schoolForm.submit();
+			if(confirm("Are you sure you want to delete this school?")) {
+				var schoolForm = document.getElementById("schoolForm");
+				var verbElement = document.getElementById("verb");
+				verbElement.setAttribute("value", verbValue); 
+				schoolForm.submit();
+			}
 		}
 		function listenForButtonClicks() {
 			var btnDelete = document.getElementById("btnDelete");
