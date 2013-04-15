@@ -56,6 +56,12 @@ h1, section
 	text-decoration: none;
 }
 
+.button:hover
+{
+	background-color: #ffe515;
+	cursor: pointer;
+}
+
 div.tablewrapper
 {
 	border: 1px solid black;
@@ -72,6 +78,11 @@ div#pagination .button
 {
 	background-color: rgb(70,115,150);
 	color: #ffffff;
+}
+
+div#pagination .button:hover
+{
+	background-color: rgb(115,155,190);
 }
 
 table
@@ -100,6 +111,12 @@ th
 	padding-bottom:4px;
 	background-color: rgb(70,115,150);
 	color:#ffffff;
+}
+
+th:hover
+{
+	background-color: rgb(115,155,190);
+	cursor: pointer;
 }
 
 th#name
